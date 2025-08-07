@@ -29,7 +29,9 @@ const gameLoop = (canvas: HTMLCanvasElement, bg: HTMLImageElement) => {
 
   const objects = new Map<number, GameObject>();
   const projectiles = new Map<number, Projectile>();
-  const game = GAME_STAGES(projectiles);
+  const heroProjectiles = new Map<number, Projectile>();
+  const game = GAME_STAGES(projectiles, heroProjectiles);
+  const hero = game.hero;
   const stage = game.stage[0];
   const update = (t: number) => {
     const currentLayer = stage.getCurrentLayer();
@@ -48,13 +50,12 @@ const gameLoop = (canvas: HTMLCanvasElement, bg: HTMLImageElement) => {
       obj.update();
       obj.draw(ctx);
     });
-    projectiles.forEach((proj) => {
+    heroProjectiles.forEach((proj) => {
       proj.update();
       proj.render(ctx);
       if (proj.isOffScreen(canvas.width, canvas.height)) {
-        projectiles.delete(proj.id);
+        heroProjectiles.delete(proj.id);
       }
-
       objects.forEach((obj) => {
         if (obj instanceof Enemy) {
           if (obj.collidesWith(proj)) {
@@ -62,10 +63,21 @@ const gameLoop = (canvas: HTMLCanvasElement, bg: HTMLImageElement) => {
             if (obj.dead()) {
               objects.delete(obj.id);
             }
-            projectiles.delete(proj.id);
+            heroProjectiles.delete(proj.id);
           }
         }
       });
+    });
+    projectiles.forEach((proj) => {
+      proj.update();
+      proj.render(ctx);
+      if (proj.isOffScreen(canvas.width, canvas.height)) {
+        projectiles.delete(proj.id);
+      }
+      if (hero.collidesWith(proj)) {
+        hero.onHit(proj.dmg);
+        projectiles.delete(proj.id);
+      }
     });
   };
 

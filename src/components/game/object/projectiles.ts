@@ -56,7 +56,8 @@ export class Hero extends GameObject {
     width: number,
     height: number,
     image: HTMLImageElement,
-    private projectiles: Map<number, GameObject>
+    private projectiles: Map<number, GameObject>,
+    private hp: number = 100
   ) {
     super(x, y, width, height, image);
 
@@ -115,5 +116,22 @@ export class Hero extends GameObject {
     if (this.y + this.height > CANVAS_DIMENSIONS.height) {
       this.y = CANVAS_DIMENSIONS.height - this.height;
     }
+  }
+
+  onHit(dmg: number): void {
+    this.hp -= dmg;
+    new Audio("/sounds/hit.wav").play();
+    if (this.hp <= 0) {
+      console.log("Hero is dead!");
+    }
+  }
+
+  collidesWith(other: GameObject): boolean {
+    return (
+      this.x < other.x + other.width &&
+      this.x + this.width > other.x &&
+      this.y < other.y + other.height &&
+      this.y + this.height > other.y
+    );
   }
 }

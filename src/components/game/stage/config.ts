@@ -1,25 +1,35 @@
 import { CANVAS_DIMENSIONS } from "../../config";
 import {
   enemyBasic,
+  enemyBoss,
   enemyLaser,
   enemySpitter,
   heroNhi,
 } from "../object/config";
-import type { GameObject } from "../object/game-object";
-import type { Projectile } from "../object/projectiles";
+import type { Hero, Projectile } from "../object/projectiles";
 import { GameStage } from "./stage";
 
 export const GAME_STAGES = (
-  projectiles: Map<number, Projectile>
-): { hero: GameObject; stage: GameStage[] } => {
+  projectiles: Map<number, Projectile>,
+  heroProjectiles: Map<number, Projectile>
+): { hero: Hero; stage: GameStage[] } => {
   const hero = heroNhi(
     CANVAS_DIMENSIONS.width / 2 - 25,
     CANVAS_DIMENSIONS.height - 50,
-    projectiles
+    heroProjectiles
   );
   return {
     hero,
     stage: [
+      new GameStage([
+        {
+          wait: 0,
+          objects: [
+            hero,
+            enemyBoss(CANVAS_DIMENSIONS.width / 2 - 100, 20, projectiles),
+          ],
+        },
+      ]),
       new GameStage([
         {
           wait: 0,

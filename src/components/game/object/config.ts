@@ -1,3 +1,4 @@
+import { LucienBossEnemy } from "./boss";
 import { GameObject, HorizontalMovingEnemy } from "./game-object";
 import { LaserEnemy } from "./laser";
 import { Hero, Projectile } from "./projectiles";
@@ -7,7 +8,7 @@ export const heroNhi = (
   x: number,
   y: number,
   projectiles: Map<number, GameObject>
-): GameObject => {
+): Hero => {
   const image = new Image();
   image.src = "/nhi.jfif";
   return new Hero(x, y, 50, 50, image, projectiles);
@@ -43,4 +44,14 @@ export const enemyLaser = (
   velocity: number = 2
 ): GameObject => {
   return new LaserEnemy(x, y, width, height, projectiles, velocity);
+};
+
+export const enemyBoss = (
+  x: number,
+  y: number,
+  projectiles: Map<number, Projectile>
+): GameObject => {
+  const image = new Image();
+  image.src = "/enemies/boss/lucien.jfif";
+  return new LucienBossEnemy(x, y, projectiles);
 };
