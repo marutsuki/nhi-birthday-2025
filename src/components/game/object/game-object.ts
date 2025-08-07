@@ -29,7 +29,7 @@ export abstract class GameObject {
 }
 
 export class Enemy extends GameObject {
-  private hit: boolean = false;
+  protected hit: boolean = false;
   constructor(
     x: number,
     y: number,
@@ -71,22 +71,35 @@ export class Enemy extends GameObject {
   }
 }
 export class HorizontalMovingEnemy extends Enemy {
-  private velocity: number = 2;
+  private firstDraw: boolean = true;
   constructor(
     x: number,
     y: number,
     width: number,
     height: number,
-    image: HTMLImageElement
+    image: HTMLImageElement,
+    private velocity: number = 4,
+    hp: number = 100
   ) {
-    super(x, y, width, height, image);
+    super(x, y, width, height, image, hp);
   }
 
   update() {
+    if (this.firstDraw) {
+      this.firstDraw = false;
+      const rand = Math.random();
+      if (rand < 0.33) {
+        new Audio("/sounds/dumamay1.ogg").play();
+      } else if (rand < 0.66) {
+        new Audio("/sounds/dumamay2.ogg").play();
+      } else {
+        new Audio("/sounds/dumamay3.ogg").play();
+      }
+    }
     this.x += this.velocity;
     if (this.x > CANVAS_DIMENSIONS.width - this.width || this.x < 0) {
       this.velocity = -this.velocity;
-      this.y += 20;
+      this.y += 50;
     }
   }
 
