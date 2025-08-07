@@ -1,4 +1,4 @@
-import type { GameObject } from "./object/game-object";
+import { Enemy, type GameObject } from "./object/game-object";
 import type { Projectile } from "./object/projectiles";
 import { GAME_STAGES } from "./stage/config";
 
@@ -54,6 +54,18 @@ const gameLoop = (canvas: HTMLCanvasElement, bg: HTMLImageElement) => {
       if (proj.isOffScreen(canvas.width, canvas.height)) {
         projectiles.delete(proj.id);
       }
+
+      objects.forEach((obj) => {
+        if (obj instanceof Enemy) {
+          if (obj.collidesWith(proj)) {
+            obj.onHit(proj.dmg);
+            if (obj.dead()) {
+              objects.delete(obj.id);
+            }
+            projectiles.delete(proj.id);
+          }
+        }
+      });
     });
   };
 

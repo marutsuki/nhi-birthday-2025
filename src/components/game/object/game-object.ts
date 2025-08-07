@@ -35,7 +35,8 @@ export class Enemy extends GameObject {
     y: number,
     width: number,
     height: number,
-    image: HTMLImageElement
+    image: HTMLImageElement,
+    private hp: number = 100
   ) {
     super(x, y, width, height, image);
   }
@@ -49,18 +50,24 @@ export class Enemy extends GameObject {
     );
   }
 
-  onHit() {
+  onHit(dmg: number = 100) {
     this.hit = true;
     console.log(`Enemy ${this.id} hit!`);
+    this.hp -= dmg;
   }
 
   draw(ctx: CanvasRenderingContext2D) {
     if (this.hit) {
       ctx.fillStyle = "red"; // Change color to indicate hit
       ctx.fillRect(this.x, this.y, this.width, this.height);
+      this.hit = false; // Reset hit state after drawing
     } else {
       super.draw(ctx);
     }
+  }
+
+  dead(): boolean {
+    return this.hp <= 0;
   }
 }
 export class HorizontalMovingEnemy extends Enemy {
@@ -81,5 +88,10 @@ export class HorizontalMovingEnemy extends Enemy {
       this.velocity = -this.velocity;
       this.y += 20;
     }
+  }
+
+  onHit(dmg?: number): void {
+    super.onHit(dmg);
+    new Audio("/sounds/hit.wav").play();
   }
 }
