@@ -68,7 +68,7 @@ export class SpitProjectile extends Projectile {
     const width = 10;
     const height = 10;
     const speed = 3;
-    super(x, y, width, height, speed, "down", 10);
+    super(x, y, width, height, speed, { x: 0, y: 1 }, 10);
   }
 
   update() {

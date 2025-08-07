@@ -1,5 +1,10 @@
 import { CANVAS_DIMENSIONS } from "../../config";
-import { enemyBasic, enemySpitter, heroNhi } from "../object/config";
+import {
+  enemyBasic,
+  enemyLaser,
+  enemySpitter,
+  heroNhi,
+} from "../object/config";
 import type { GameObject } from "../object/game-object";
 import type { Projectile } from "../object/projectiles";
 import { GameStage } from "./stage";
@@ -196,6 +201,20 @@ export const GAME_STAGES = (
           objects: [
             enemyBasic(100, 0, 80),
             enemyBasic(CANVAS_DIMENSIONS.width - 100, 0, -2),
+          ],
+        },
+        {
+          wait: 1380,
+          objects: [
+            enemyLaser(0, 0, 80, 80, projectiles),
+            enemyLaser(
+              CANVAS_DIMENSIONS.width - 120,
+              0,
+              80,
+              80,
+              projectiles,
+              -2
+            ),
           ],
         },
       ]),

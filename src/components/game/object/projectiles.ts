@@ -8,7 +8,7 @@ export abstract class Projectile extends GameObject {
     public width: number,
     public height: number,
     public speed: number,
-    public direction: "up" | "down" | "left" | "right",
+    public direction: { x: number; y: number },
     public dmg: number = 100,
     image: HTMLImageElement = new Image()
   ) {
@@ -31,11 +31,12 @@ export class HeroProjectile extends Projectile {
     const width = 10;
     const height = 10;
     const speed = 5;
-    super(x, y, width, height, speed, "up", 40);
+    super(x, y, width, height, speed, { x: 0, y: -1 }, 40);
   }
 
   update() {
-    this.y -= this.speed;
+    this.x += this.speed * this.direction.x;
+    this.y += this.speed * this.direction.y;
   }
 
   render(ctx: CanvasRenderingContext2D) {

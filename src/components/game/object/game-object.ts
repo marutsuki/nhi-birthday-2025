@@ -70,6 +70,7 @@ export class Enemy extends GameObject {
     return this.hp <= 0;
   }
 }
+
 export class HorizontalMovingEnemy extends Enemy {
   private firstDraw: boolean = true;
   constructor(

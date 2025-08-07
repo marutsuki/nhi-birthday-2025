@@ -1,4 +1,5 @@
 import { GameObject, HorizontalMovingEnemy } from "./game-object";
+import { LaserEnemy } from "./laser";
 import { Hero, Projectile } from "./projectiles";
 import { SpitterEnemy } from "./spitter";
 
@@ -31,4 +32,15 @@ export const enemySpitter = (
   velocity: number = 2
 ): GameObject => {
   return new SpitterEnemy(x, y, width, height, projectiles, velocity);
+};
+
+export const enemyLaser = (
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  projectiles: Map<number, Projectile>,
+  velocity: number = 2
+): GameObject => {
+  return new LaserEnemy(x, y, width, height, projectiles, velocity);
 };
