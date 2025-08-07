@@ -26,22 +26,16 @@ const gameLoop = (canvas: HTMLCanvasElement, bg: HTMLImageElement) => {
     return;
   }
 
-  let init = true;
   const stage = GAME_STAGES[0];
   const objects = new Map<number, GameObject>();
 
   const update = (t: number) => {
     const currentLayer = stage.getCurrentLayer();
     if (currentLayer && t > currentLayer.wait) {
-      stage.nextLayer();
-      init = true;
-    }
-
-    if (init) {
-      stage.getCurrentLayer()?.objects.forEach((obj) => {
-        objects.set(objects.size, obj);
+      currentLayer?.objects.forEach((obj) => {
+        objects.set(obj.id, obj);
       });
-      init = false;
+      stage.nextLayer();
     }
   };
 

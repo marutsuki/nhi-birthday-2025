@@ -15,9 +15,7 @@ export class GameStage {
   }
 
   nextLayer() {
-    if (this.currentLayerIndex < this.layers.length - 1) {
-      this.currentLayerIndex++;
-    }
+    this.currentLayerIndex++;
   }
 
   getCurrentLayer(): StageLayer | null {
