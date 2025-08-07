@@ -1,4 +1,5 @@
 import type { GameObject } from "./object/game-object";
+import type { Projectile } from "./object/projectiles";
 import { GAME_STAGES } from "./stage/config";
 
 export const initGame = (canvas: HTMLCanvasElement) => {
@@ -26,9 +27,10 @@ const gameLoop = (canvas: HTMLCanvasElement, bg: HTMLImageElement) => {
     return;
   }
 
-  const stage = GAME_STAGES[0];
   const objects = new Map<number, GameObject>();
-
+  const projectiles = new Map<number, Projectile>();
+  const game = GAME_STAGES(projectiles);
+  const stage = game.stage[0];
   const update = (t: number) => {
     const currentLayer = stage.getCurrentLayer();
     if (currentLayer && t > currentLayer.wait) {
@@ -45,6 +47,13 @@ const gameLoop = (canvas: HTMLCanvasElement, bg: HTMLImageElement) => {
     objects.forEach((obj) => {
       obj.update();
       obj.draw(ctx);
+    });
+    projectiles.forEach((proj) => {
+      proj.update();
+      proj.render(ctx);
+      if (proj.isOffScreen(canvas.width, canvas.height)) {
+        projectiles.delete(proj.id);
+      }
     });
   };
 

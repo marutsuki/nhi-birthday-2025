@@ -1,6 +1,6 @@
 import { CANVAS_DIMENSIONS } from "../../config";
 
-export class GameObject {
+export abstract class GameObject {
   private static idCounter = 0;
   public id: number;
   constructor(
@@ -25,65 +25,6 @@ export class GameObject {
 
   update() {
     // Update logic for the game object can be added here
-  }
-}
-
-export class Hero extends GameObject {
-  private velocity: number = 5;
-  private keysPressed: Set<string> = new Set();
-  private direction: { x: number; y: number } = { x: 0, y: 0 };
-  constructor(
-    x: number,
-    y: number,
-    width: number,
-    height: number,
-    image: HTMLImageElement
-  ) {
-    super(x, y, width, height, image);
-
-    addEventListener("keydown", (event) => {
-      switch (event.key) {
-        case "ArrowUp":
-          this.direction = { x: 0, y: -this.velocity };
-          break;
-        case "ArrowDown":
-          this.direction = { x: 0, y: this.velocity };
-          break;
-        case "ArrowLeft":
-          this.direction = { x: -this.velocity, y: 0 };
-          break;
-        case "ArrowRight":
-          this.direction = { x: this.velocity, y: 0 };
-          break;
-      }
-      this.keysPressed.add(event.key);
-    });
-
-    addEventListener("keyup", (event) => {
-      this.keysPressed.delete(event.key);
-      if (this.keysPressed.size === 0) {
-        this.direction = { x: 0, y: 0 };
-      }
-    });
-  }
-
-  override update() {
-    this.move(this.direction.x, this.direction.y);
-  }
-
-  move(dx: number, dy: number) {
-    this.x += dx;
-    this.y += dy;
-
-    // Ensure the hero stays within canvas bounds
-    if (this.x < 0) this.x = 0;
-    if (this.y < 0) this.y = 0;
-    if (this.x + this.width > CANVAS_DIMENSIONS.width) {
-      this.x = CANVAS_DIMENSIONS.width - this.width;
-    }
-    if (this.y + this.height > CANVAS_DIMENSIONS.height) {
-      this.y = CANVAS_DIMENSIONS.height - this.height;
-    }
   }
 }
 

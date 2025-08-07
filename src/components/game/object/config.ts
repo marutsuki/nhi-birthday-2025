@@ -1,9 +1,14 @@
-import { GameObject, Hero, HorizontalMovingEnemy } from "./game-object";
+import { GameObject, HorizontalMovingEnemy } from "./game-object";
+import { Hero } from "./projectiles";
 
-export const heroNhi = (x: number, y: number): GameObject => {
+export const heroNhi = (
+  x: number,
+  y: number,
+  projectiles: Map<number, GameObject>
+): GameObject => {
   const image = new Image();
   image.src = "/nhi.jfif";
-  return new Hero(x, y, 50, 50, image);
+  return new Hero(x, y, 50, 50, image, projectiles);
 };
 
 export const enemyBasic = (x: number, y: number): GameObject => {
