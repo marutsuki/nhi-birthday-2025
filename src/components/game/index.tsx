@@ -1,6 +1,10 @@
 import { useCallback, useEffect, useState, type FC } from "react";
 import { CANVAS_DIMENSIONS } from "../config";
-import type { FinishHimEvent } from "./object/event";
+import {
+  BossGoneEvent,
+  BossHitEvent,
+  type FinishHimEvent,
+} from "./object/event";
 
 // List of all final laser images
 const FINAL_LASER_IMAGES = [
@@ -40,19 +44,6 @@ const FINAL_LASER_IMAGES = [
   "f221a15a-723f-49ec-92ba-a6b1dcb198db.jfif",
   "fec2e5a5-0ec7-42be-8d35-2e9f5d07cb91.jfif",
 ];
-
-interface LaserParticle {
-  id: number;
-  image: string;
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  rotation: number;
-  rotationSpeed: number;
-  scale: number;
-  opacity: number;
-}
 
 const Game: FC = () => {
   const [state, setState] = useState<"game" | "finish" | "finished">("game");
@@ -106,6 +97,17 @@ const Game: FC = () => {
         ];
       };
 
+      const getTiming = (delay: number) => {
+        const timing = {
+          duration: 2500,
+          iterations: 1,
+          fill: "forwards" as FillMode,
+          easing: "ease-in-out",
+          delay: delay,
+        };
+        return timing;
+      };
+      let i: number;
       const images = [...FINAL_LASER_IMAGES];
       const animateNext = () => {
         if (images.length === 0) return;
@@ -117,20 +119,115 @@ const Game: FC = () => {
         const element = document.querySelector(
           `#laser-${FINAL_LASER_IMAGES.indexOf(image)}`
         );
+        const pHeart = document.querySelector(
+          `#heart-${FINAL_LASER_IMAGES.indexOf(image)}`
+        );
+
         if (element) {
-          const timing = {
-            duration: 2500,
-            iterations: 1,
-            fill: "forwards" as FillMode,
-            easing: "ease-in-out",
-            delay,
-          };
           delay += 200;
-          element.animate(getKeyframes(), timing);
+          element.animate(getKeyframes(), getTiming(delay));
+          pHeart?.animate(getKeyframes(), getTiming(delay + 50));
         }
         animateNext();
       };
+      setTimeout(() => {
+        i = setInterval(() => {
+          window.dispatchEvent(new BossHitEvent());
+        }, 200);
+      }, 2500);
+      setTimeout(() => {
+        console.log("Boss defeated, triggering finish event");
+        window.dispatchEvent(new BossGoneEvent(finalBossLocation));
+      }, 12000);
       animateNext();
+
+      setTimeout(() => {
+        clearTimeout(i);
+      }, 20000);
+      setTimeout(() => {
+        const canvas = document.getElementById(
+          "container"
+        ) as HTMLCanvasElement;
+
+        canvas.animate(
+          [
+            {
+              transform: `translateY(0) rotate(0deg)`,
+              offset: 0,
+            },
+            {
+              transform: `translateY(0px) rotate(0deg)`,
+              offset: 0.09,
+            },
+            {
+              transform: `translateY(10px) rotate(15deg)`,
+              offset: 0.1,
+            },
+            {
+              transform: `translateY(10px) rotate(15deg)`,
+              offset: 0.21,
+            },
+            {
+              transform: `translateY(-10px) rotate(-15deg)`,
+              offset: 0.22,
+            },
+            {
+              transform: `translateY(-10px) rotate(-15deg)`,
+              offset: 0.34,
+            },
+            {
+              transform: `translateY(5px) rotate(10deg)`,
+              offset: 0.35,
+            },
+            {
+              transform: `translateY(5px) rotate(10deg)`,
+              offset: 0.46,
+            },
+            {
+              transform: `translateY(-7px) rotate(-5deg)`,
+              offset: 0.47,
+            },
+            {
+              transform: `translateY(-7px) rotate(-5deg)`,
+              offset: 0.58,
+            },
+            {
+              transform: `translateY(11px) rotate(25deg)`,
+              offset: 0.59,
+            },
+            {
+              transform: `translateY(11px) rotate(25deg)`,
+              offset: 0.71,
+            },
+            {
+              transform: `translateY(-2px) rotate(0deg)`,
+              offset: 0.72,
+            },
+            {
+              transform: `translateY(-2px) rotate(0deg)`,
+              offset: 0.84,
+            },
+            {
+              transform: `translateY(4px) rotate(5deg)`,
+              offset: 0.85,
+            },
+            {
+              transform: `translateY(4px) rotate(5deg)`,
+              offset: 0.99,
+            },
+            {
+              transform: `translateY(0px) rotate(0deg)`,
+              offset: 1,
+            },
+          ],
+          {
+            duration: 500,
+            fill: "forwards",
+            easing: "linear",
+            iterations: 18,
+          }
+        );
+      }, 2500);
     },
     []
   );
@@ -152,83 +249,172 @@ const Game: FC = () => {
     };
   }, [startLaserBeam]);
 
+  useEffect(() => {
+    window.addEventListener("boss-gone", (e: Event) => {
+      const event = e as BossGoneEvent;
+      const getKeyframes = () => {
+        const randomDir = Math.random() * Math.PI * 2;
+        return [
+          {
+            transform: `translate(${
+              event.bossLocation.x - CANVAS_DIMENSIONS.width / 2
+            }px, ${
+              event.bossLocation.y - CANVAS_DIMENSIONS.height / 2
+            }px) rotate(0deg) scale(1)`,
+            opacity: 1,
+          },
+          {
+            transform: `translate(${
+              event.bossLocation.x -
+              CANVAS_DIMENSIONS.width / 2 +
+              Math.cos(randomDir) * 2000
+            }px, ${
+              event.bossLocation.y -
+              CANVAS_DIMENSIONS.height / 2 +
+              Math.sin(randomDir) * 2000
+            }px) rotate(${Math.random() * 3600}deg) scale(1)`,
+            opacity: 1,
+          },
+        ];
+      };
+
+      const getTiming = () => {
+        const timing = {
+          duration: 2000 + Math.random() * 1000,
+          iterations: 1,
+          fill: "forwards" as FillMode,
+          easing: "ease-in-out",
+        };
+        return timing;
+      };
+
+      for (let i = 0; i < 36; i++) {
+        const el = document.getElementById(`dust-${i}`);
+        if (el) {
+          el.animate(getKeyframes(), getTiming());
+        }
+      }
+    });
+  }, []);
   const callback = useCallback((canvas: HTMLCanvasElement) => {
     import("./game").then(({ initGame }) => {
       initGame(canvas);
     });
   }, []);
   return (
-    <div className="relative grid place-items-center h-full">
+    <div id="container" className="relative grid place-items-center h-full">
       <div className="fixed inset-0 scale-200 blur-lg opacity-0 animate-flash bg-[url('/gradient.png')] z-50">
         Nhi ♡ Lucien
       </div>
-      {/* {state === "finish" && (
+      {state === "finish" && (
         <>
           <img
             src="/final1.jfif"
             alt="Final Image"
-            className="absolute h-72 animate-spin-1 transform-[translateY(-50vh)]"
+            className="absolute h-72 animate-spin-1 transform-[translateY(-200vh)]"
           />
           <img
             src="/final2.jfif"
             alt="Final Image"
-            className="absolute h-72 animate-spin-2 transform-[translateY(-50vh)]"
+            className="absolute h-72 animate-spin-2 transform-[translateY(-200vh)]"
           />
           <img
             src="/final3.jfif"
             alt="Final Image"
-            className="absolute h-72 animate-spin-3 transform-[translateY(-50vh)]"
+            className="absolute h-72 animate-spin-3 transform-[translateY(-200vh)]"
           />
           <img
             src="/final4.jfif"
             alt="Final Image"
-            className="absolute h-72 animate-spin-4 transform-[translateY(-50vh)]"
+            className="absolute h-72 animate-spin-4 transform-[translateY(-200vh)]"
           />
           <img
             src="/final5.jfif"
             alt="Final Image"
-            className="absolute h-72 animate-spin-5 transform-[translateY(-50vh)]"
+            className="absolute h-72 animate-spin-5 transform-[translateY(-200vh)]"
           />
           <img
             src="/final6.jfif"
             alt="Final Image"
-            className="absolute h-72 animate-spin-6 transform-[translateY(-50vh)]"
+            className="absolute h-72 animate-spin-6 transform-[translateY(-200vh)]"
           />
           <img
             src="/final7.jfif"
             alt="Final Image"
-            className="absolute h-72 animate-spin-7 transform-[translateY(-50vh)]"
+            className="absolute h-72 animate-spin-7 transform-[translateY(-200vh)]"
           />
           <img
             src="/final8.jfif"
             alt="Final Image"
-            className="absolute h-72 animate-spin-8 transform-[translateY(-50vh)]"
+            className="absolute h-72 animate-spin-8 transform-[translateY(-200vh)]"
           />
           <img
             src="/final9.jfif"
             alt="Final Image"
-            className="absolute h-72 animate-spin-9 transform-[translateY(-50vh)]"
+            className="absolute h-72 animate-spin-9 transform-[translateY(-200vh)]"
           />
           <img
             src="/final10.jfif"
             alt="Final Image"
-            className="absolute h-72 animate-spin-10 transform-[translateY(-50vh)]"
+            className="absolute h-72 animate-spin-10 transform-[translateY(-200vh)]"
           />
         </>
-      )} */}
+      )}
+      {Array(36)
+        .fill(null)
+        .map((_, i) => {
+          const rand = Math.random();
+          let img: string;
+          if (rand < 0.33) {
+            img = "/projectiles/bahnmi1.jfif";
+          } else if (rand < 0.66) {
+            img = "/projectiles/bahnmi2.jfif";
+          } else {
+            img = "/projectiles/bahnmi3.jfif";
+          }
+
+          return (
+            <img
+              id={`dust-${i}`}
+              key={`dust-${i}`}
+              src={img}
+              alt="Dust Particle"
+              className="absolute pointer-events-none opacity-0"
+              style={{
+                width: "100px",
+                height: "100px",
+                zIndex: 100,
+              }}
+            />
+          );
+        })}
       {FINAL_LASER_IMAGES.map((particle, index) => (
-        <img
-          id={`laser-${index}`}
-          key={particle}
-          src={`/final-laser/${particle}`}
-          alt="Laser Particle"
-          className="absolute pointer-events-none opacity-0"
-          style={{
-            width: "100px",
-            height: "100px",
-            zIndex: 100,
-          }}
-        />
+        <>
+          <span
+            id={`heart-${index}`}
+            key={`heart-${index}`}
+            className="absolute pointer-events-none opacity-0 text-4xl"
+            style={{
+              width: "100px",
+              height: "100px",
+              zIndex: 101,
+            }}
+          >
+            💜
+          </span>
+          <img
+            id={`laser-${index}`}
+            key={particle}
+            src={`/final-laser/${particle}`}
+            alt="Laser Particle"
+            className="absolute pointer-events-none opacity-0"
+            style={{
+              width: "100px",
+              height: "100px",
+              zIndex: 100,
+            }}
+          />
+        </>
       ))}
       <canvas
         ref={callback}

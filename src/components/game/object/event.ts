@@ -14,3 +14,17 @@ export class FinishHimEvent extends Event {
     super(FinishHimEvent.type);
   }
 }
+
+export class BossHitEvent extends Event {
+  static readonly type = "boss-hit";
+  constructor() {
+    super(BossHitEvent.type);
+  }
+}
+
+export class BossGoneEvent extends Event {
+  static readonly type = "boss-gone";
+  constructor(public bossLocation: { x: number; y: number }) {
+    super(BossGoneEvent.type);
+  }
+}

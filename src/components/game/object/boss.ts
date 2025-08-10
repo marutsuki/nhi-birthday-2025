@@ -21,6 +21,13 @@ export class LucienBossEnemy extends Enemy {
 
   private firstDraw: boolean = true;
   private velocity: number = 2;
+
+  private moan1: HTMLAudioElement;
+  private moan2: HTMLAudioElement;
+  private moan3: HTMLAudioElement;
+  private moan4: HTMLAudioElement;
+  private moan5: HTMLAudioElement;
+
   constructor(
     x: number,
     y: number,
@@ -30,6 +37,36 @@ export class LucienBossEnemy extends Enemy {
     image.src = "/enemies/boss/lucien.jfif";
     super(x, y, 200, 200, image, 10);
     this.timer = LucienBossEnemy.timeline[0].wait;
+
+    this.moan1 = new Audio("/sounds/moan1.ogg");
+    this.moan2 = new Audio("/sounds/moan2.ogg");
+    this.moan3 = new Audio("/sounds/moan3.ogg");
+    this.moan4 = new Audio("/sounds/moan4.ogg");
+    this.moan5 = new Audio("/sounds/moan5.ogg");
+    window.addEventListener("boss-hit", () => {
+      if (this.isDead) {
+        return;
+      }
+      this.hit = true;
+      const rand = Math.random();
+
+      if (rand < 0.2) {
+        this.moan1.play();
+      } else if (rand < 0.4) {
+        this.moan2.play();
+      } else if (rand < 0.6) {
+        this.moan3.play();
+      } else if (rand < 0.8) {
+        this.moan4.play();
+      } else {
+        this.moan5.play();
+      }
+    });
+
+    window.addEventListener("boss-gone", () => {
+      this.isDead = true;
+      new Audio("/sounds/explode.mp3").play();
+    });
   }
 
   update() {
@@ -105,6 +142,7 @@ export class LucienBossEnemy extends Enemy {
 
   override onHit(dmg: number): void {
     this.hp -= dmg;
+    this.hit = true;
     if (this.hp <= 0) {
       console.log("Lucien Boss defeated!");
       this.projectiles.clear();
@@ -115,6 +153,32 @@ export class LucienBossEnemy extends Enemy {
           y: this.y + this.height / 2,
         })
       );
+    }
+    const rand = Math.random();
+
+    if (rand < 0.2) {
+      this.moan1.play();
+    } else if (rand < 0.4) {
+      this.moan2.play();
+    } else if (rand < 0.6) {
+      this.moan3.play();
+    } else if (rand < 0.8) {
+      this.moan4.play();
+    } else {
+      this.moan5.play();
+    }
+  }
+
+  override draw(ctx: CanvasRenderingContext2D) {
+    if (this.isDead) {
+      return;
+    }
+    if (this.hit) {
+      ctx.fillStyle = "red";
+      ctx.fillRect(this.x - 15, this.y - 15, this.width + 30, this.height + 30);
+      this.hit = false;
+    } else {
+      super.draw(ctx);
     }
   }
 
