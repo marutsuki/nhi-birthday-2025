@@ -36,7 +36,7 @@ export class Enemy extends GameObject {
     width: number,
     height: number,
     image: HTMLImageElement,
-    private hp: number = 100
+    protected hp: number = 100
   ) {
     super(x, y, width, height, image);
   }

@@ -1,10 +1,9 @@
-import "./App.css";
 import Game from "./components/game";
 
 function App() {
   return (
     <>
-      <div>
+      <div className="h-screen overflow-hidden">
         <Game />
       </div>
     </>

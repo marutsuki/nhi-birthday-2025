@@ -1,4 +1,5 @@
 import { CANVAS_DIMENSIONS } from "../../config";
+import { FinishHimEvent, type BossDefeatedEvent } from "./event";
 import { GameObject } from "./game-object";
 
 export abstract class Projectile extends GameObject {
@@ -91,6 +92,17 @@ export class Hero extends GameObject {
       if (this.keysPressed.size === 0) {
         this.direction = { x: 0, y: 0 };
       }
+    });
+
+    window.addEventListener("boss-defeated", (e: Event) => {
+      const event = e as BossDefeatedEvent;
+      this.projectiles.clear();
+      window.dispatchEvent(
+        new FinishHimEvent(event.bossLocation, {
+          x: this.x + this.width / 2,
+          y: this.y + this.height / 2,
+        })
+      );
     });
   }
 

@@ -1,4 +1,5 @@
 import { CANVAS_DIMENSIONS } from "../../config";
+import { BossDefeatedEvent } from "./event";
 import { Enemy } from "./game-object";
 import { Projectile } from "./projectiles";
 
@@ -13,6 +14,8 @@ export class LucienBossEnemy extends Enemy {
     { wait: 120, type: "bigSlow" },
     { wait: 120, type: "scorch" },
   ];
+  private finishHim: boolean = false;
+  private isDead: boolean = false;
   private attackIndex: number = 0;
   private timer: number = 0;
 
@@ -25,11 +28,14 @@ export class LucienBossEnemy extends Enemy {
   ) {
     const image = new Image();
     image.src = "/enemies/boss/lucien.jfif";
-    super(x, y, 200, 200, image, 5000);
+    super(x, y, 200, 200, image, 10);
     this.timer = LucienBossEnemy.timeline[0].wait;
   }
 
   update() {
+    if (this.finishHim) {
+      return;
+    }
     if (this.firstDraw) {
       this.firstDraw = false;
       new Audio("/sounds/moan.ogg").play();
@@ -95,6 +101,25 @@ export class LucienBossEnemy extends Enemy {
       );
       this.projectiles.set(proj.id, proj);
     }
+  }
+
+  override onHit(dmg: number): void {
+    this.hp -= dmg;
+    if (this.hp <= 0) {
+      console.log("Lucien Boss defeated!");
+      this.projectiles.clear();
+      this.finishHim = true;
+      window.dispatchEvent(
+        new BossDefeatedEvent({
+          x: this.x + this.width / 2,
+          y: this.y + this.height / 2,
+        })
+      );
+    }
+  }
+
+  override dead(): boolean {
+    return this.isDead;
   }
 }
 
