@@ -47,6 +47,7 @@ export class HeroProjectile extends Projectile {
 }
 
 export class Hero extends GameObject {
+  private freeze = false;
   private velocity: number = 5;
   private keysPressed: Set<string> = new Set();
   private direction: { x: number; y: number } = { x: 0, y: 0 };
@@ -63,6 +64,7 @@ export class Hero extends GameObject {
     super(x, y, width, height, image);
 
     addEventListener("keydown", (event) => {
+      if (this.freeze) return;
       switch (event.key) {
         case "ArrowUp":
           this.direction = { x: 0, y: -this.velocity };
@@ -97,6 +99,7 @@ export class Hero extends GameObject {
     window.addEventListener("boss-defeated", (e: Event) => {
       const event = e as BossDefeatedEvent;
       this.projectiles.clear();
+      this.freeze = true;
       window.dispatchEvent(
         new FinishHimEvent(event.bossLocation, {
           x: this.x + this.width / 2,

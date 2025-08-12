@@ -18,6 +18,7 @@ export class LucienBossEnemy extends Enemy {
   private isDead: boolean = false;
   private attackIndex: number = 0;
   private timer: number = 0;
+  private attacking: boolean = false;
 
   private firstDraw: boolean = true;
   private velocity: number = 2;
@@ -28,14 +29,29 @@ export class LucienBossEnemy extends Enemy {
   private moan4: HTMLAudioElement;
   private moan5: HTMLAudioElement;
 
+  private open: HTMLImageElement;
+  private hurt1: HTMLImageElement;
+  private hurt2: HTMLImageElement;
+
+  private framesSinceLastHit = 3;
+
   constructor(
     x: number,
     y: number,
     private projectiles: Map<number, Projectile>
   ) {
     const image = new Image();
-    image.src = "/enemies/boss/lucien.jfif";
-    super(x, y, 200, 200, image, 10);
+    image.src = "/enemies/boss/lucien.png";
+
+    super(x, y, 200, 200, image, 4000);
+
+    this.open = new Image();
+    this.open.src = "/enemies/boss/lucien1.png";
+    this.hurt1 = new Image();
+    this.hurt1.src = "/enemies/boss/hurt1.png";
+    this.hurt2 = new Image();
+    this.hurt2.src = "/enemies/boss/hurt2.png";
+
     this.timer = LucienBossEnemy.timeline[0].wait;
 
     this.moan1 = new Audio("/sounds/moan1.ogg");
@@ -100,6 +116,7 @@ export class LucienBossEnemy extends Enemy {
         this.attackIndex = 0;
       }
       this.timer = LucienBossEnemy.timeline[this.attackIndex].wait;
+      this.attacking = false;
     }
     this.timer--;
   }
@@ -114,6 +131,7 @@ export class LucienBossEnemy extends Enemy {
         { x: Math.cos(randAngle), y: Math.sin(randAngle) }
       );
       this.projectiles.set(proj.id, proj);
+      this.attacking = true;
     }
   }
 
@@ -127,6 +145,7 @@ export class LucienBossEnemy extends Enemy {
         { x: Math.cos(randAngle), y: Math.sin(randAngle) }
       );
       this.projectiles.set(proj.id, proj);
+      this.attacking = true;
     }
   }
 
@@ -137,6 +156,7 @@ export class LucienBossEnemy extends Enemy {
         this.y + this.height
       );
       this.projectiles.set(proj.id, proj);
+      this.attacking = true;
     }
   }
 
@@ -173,13 +193,29 @@ export class LucienBossEnemy extends Enemy {
     if (this.isDead) {
       return;
     }
-    if (this.hit) {
-      ctx.fillStyle = "red";
-      ctx.fillRect(this.x - 15, this.y - 15, this.width + 30, this.height + 30);
+    if (this.framesSinceLastHit < 3) {
+      const rand = Math.random();
+      let img;
+      if (rand < 0.5) {
+        img = this.hurt1;
+      } else {
+        img = this.hurt2;
+      }
+      ctx.drawImage(img, this.x - 15, this.y - 15, this.width + 30, this.height + 30);
       this.hit = false;
     } else {
-      super.draw(ctx);
+      if (this.attacking) {
+        ctx.drawImage(this.open, this.x, this.y, this.width, this.height);
+      } else {
+        super.draw(ctx);
+      }
     }
+    if (this.hit) {
+      this.framesSinceLastHit = 0;
+    } else {
+      this.framesSinceLastHit++;
+    }
+
   }
 
   override dead(): boolean {
@@ -197,7 +233,7 @@ export class ScorchLaserProjectile extends Projectile {
     image: HTMLImageElement = new Image()
   ) {
     super(x, y, 100, 100, speed, direction, dmg, image);
-    this.image.src = "/projectiles/scorch.jpg";
+    this.image.src = "/projectiles/scorch.png";
   }
 
   update() {
@@ -219,7 +255,7 @@ export class SpreadProjectile extends Projectile {
     public dmg: number = 100
   ) {
     super(x, y, 30, 30, speed, direction, dmg);
-    this.image.src = "/projectiles/thumbsup.jpg";
+    this.image.src = "/projectiles/thumbsup.png";
   }
   update() {
     this.x += this.speed * this.direction.x;
@@ -240,7 +276,7 @@ export class BigSlowProjectile extends Projectile {
     image: HTMLImageElement = new Image()
   ) {
     super(x, y, 150, 150, speed, direction, dmg, image);
-    this.image.src = "/projectiles/brs.jpg";
+    this.image.src = "/projectiles/brs.png";
   }
 
   update() {

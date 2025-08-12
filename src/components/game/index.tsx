@@ -1,10 +1,11 @@
-import { useCallback, useEffect, useState, type FC } from "react";
+import { useCallback, useEffect, useRef, useState, type FC } from "react";
 import { CANVAS_DIMENSIONS } from "../config";
 import {
   BossGoneEvent,
   BossHitEvent,
   type FinishHimEvent,
 } from "./object/event";
+import { FaHandPointDown } from "react-icons/fa";
 
 // List of all final laser images
 const FINAL_LASER_IMAGES = [
@@ -45,30 +46,68 @@ const FINAL_LASER_IMAGES = [
   "fec2e5a5-0ec7-42be-8d35-2e9f5d07cb91.jfif",
 ];
 
-const Game: FC = () => {
-  const [state, setState] = useState<"game" | "finish" | "finished">("game");
+const slaps = new Audio("/sounds/slaps.wav");
 
+const Game: FC = () => {
+  const spam = useRef(0);
+  const spamButton = useRef<HTMLButtonElement>(null);
+  const [state, setState] = useState<"game" | "finish" | "finished">("game");
+  const [playerLocation, setPlayerLocation] = useState({ x: 0, y: 0});
+  const [bossLocation, setBossLocation] = useState({x: 0, y: 0});
+  
+  useEffect(() => {
+    if (state === "game") return;
+    const el = (key: KeyboardEvent) => {
+      if (state === "finish" && key.key === " ") {
+        spam.current = spam.current + 1;
+
+        console.log(spam.current);
+        if (spam.current > 40) {
+          setState("finished");
+        }
+
+        console.log("red");
+        const b = spamButton.current
+        if (b) {
+          b.style.background = "red";
+        }
+      }
+    }
+    const kel = (key: KeyboardEvent) => {
+      if (key.key !== " ") {
+        return;
+      }
+      const b = spamButton.current
+      if (b) {
+        b.style.background = "white";
+      }
+    }
+    window.addEventListener("keydown", el)
+    window.addEventListener("keyup", kel)
+
+    return () => {
+      window.removeEventListener("keydown", el);
+      window.removeEventListener("keydown", kel);
+    }
+  }, [state])
   const startLaserBeam = useCallback(
-    (
-      finalBossLocation: { x: number; y: number },
-      finalPlayerLocation: { x: number; y: number }
-    ) => {
+    () => {
       let delay = 0;
       const getKeyframes = () => {
         return [
           {
             transform: `translate(${
-              finalPlayerLocation.x - CANVAS_DIMENSIONS.width / 2
+              playerLocation.x - CANVAS_DIMENSIONS.width / 2
             }px, ${
-              finalPlayerLocation.y - CANVAS_DIMENSIONS.height / 2
+              playerLocation.y - CANVAS_DIMENSIONS.height / 2
             }px) rotate(0deg) scale(1)`,
             opacity: 1,
           },
           {
             transform: `translate(${
-              finalBossLocation.x - CANVAS_DIMENSIONS.width / 2
+              bossLocation.x - CANVAS_DIMENSIONS.width / 2
             }px, ${
-              finalBossLocation.y - CANVAS_DIMENSIONS.height / 2
+              bossLocation.y - CANVAS_DIMENSIONS.height / 2
             }px) rotate(${Math.random() * 1800}deg) scale(${Math.max(
               Math.random() * 2,
               1
@@ -78,18 +117,18 @@ const Game: FC = () => {
           },
           {
             transform: `translate(${
-              finalBossLocation.x - CANVAS_DIMENSIONS.width / 2
+              bossLocation.x - CANVAS_DIMENSIONS.width / 2
             }px, ${
-              finalBossLocation.y - CANVAS_DIMENSIONS.height / 2
+              bossLocation.y - CANVAS_DIMENSIONS.height / 2
             }px) rotate(0deg) scale(10)`,
             opacity: 1,
             offset: 0.99,
           },
           {
             transform: `translate(${
-              finalBossLocation.x - CANVAS_DIMENSIONS.width / 2
+              bossLocation.x - CANVAS_DIMENSIONS.width / 2
             }px, ${
-              finalBossLocation.y - CANVAS_DIMENSIONS.height / 2
+              bossLocation.y - CANVAS_DIMENSIONS.height / 2
             }px) rotate(0deg) scale(10)`,
             opacity: 0,
             offset: 1,
@@ -137,13 +176,28 @@ const Game: FC = () => {
       }, 2500);
       setTimeout(() => {
         console.log("Boss defeated, triggering finish event");
-        window.dispatchEvent(new BossGoneEvent(finalBossLocation));
+        window.dispatchEvent(new BossGoneEvent(bossLocation));
       }, 12000);
       animateNext();
 
+      let i2: number;
+      let i3: number;
       setTimeout(() => {
-        clearTimeout(i);
-      }, 20000);
+        i2 = setInterval(() => {
+          new Audio("/sounds/slap1.wav").play();
+        }, 500);
+        i3 = setInterval(() => {
+          new Audio("/sounds/spank.wav").play();
+        }, 300);
+        slaps.play();
+        new Audio("/sounds/scream.ogg").play();
+      }, 2700)
+      setTimeout(() => {
+        slaps.pause();
+        clearInterval(i);
+        clearInterval(i2);
+        clearInterval(i3);
+      }, 12000);
       setTimeout(() => {
         const canvas = document.getElementById(
           "container"
@@ -229,18 +283,28 @@ const Game: FC = () => {
         );
       }, 2500);
     },
-    []
+    [playerLocation, bossLocation]
   );
+
+  useEffect(() => {
+    if (state === "finished") {
+      setTimeout(() => {
+        new Audio("/sounds/pipple.ogg").play()
+      }, 2000);
+      setTimeout(() => {
+        startLaserBeam();
+      }, 5000);
+    }
+  }, [state]);
 
   useEffect(() => {
     const handleFinishHim = (e: Event) => {
       const event = e as FinishHimEvent;
       console.log("Finish Him event received");
       console.log(event.bossLocation, event.playerLocation);
+      setPlayerLocation(event.playerLocation);
+      setBossLocation(event.bossLocation);
       setState("finish");
-      setTimeout(() => {
-        startLaserBeam(event.bossLocation, event.playerLocation);
-      }, 5000);
     };
 
     window.addEventListener("finish-him", handleFinishHim);
@@ -303,60 +367,107 @@ const Game: FC = () => {
   }, []);
   return (
     <div id="container" className="relative grid place-items-center h-full">
-      <div className="fixed inset-0 scale-200 blur-lg opacity-0 animate-flash bg-[url('/gradient.png')] z-50">
-        Nhi ♡ Lucien
-      </div>
       {state === "finish" && (
+        <div className="absolute flex flex-col items-center z-[1000]">
+          <h1 className="text-4xl mb-4">Finish Him !!!</h1>
+          <FaHandPointDown color="black" size={48} className="animate-bounce"/>
+          <button ref={spamButton} className="text-2xl border p-2 shadow-lg rounded-md" style={{background: "white"}}>SPAM THE SPACE BUTTON</button>
+        </div>
+      )}
+      {state === "finished" && (
         <>
+        <div className="fixed inset-0 scale-200 blur-lg opacity-0 animate-flash bg-[url('/gradient.png')] z-50"/>
+          <img src="/slap.jpg" className="w-48 h-48 opacity-0 absolute animate-flash z-[60]"/>
+
           <img
             src="/final1.jfif"
             alt="Final Image"
             className="absolute h-72 animate-spin-1 transform-[translateY(-200vh)]"
+            style={{
+              top: playerLocation.y + CANVAS_DIMENSIONS.height / 4,
+              left: playerLocation.x + 32
+            }}
           />
           <img
             src="/final2.jfif"
             alt="Final Image"
             className="absolute h-72 animate-spin-2 transform-[translateY(-200vh)]"
+                        style={{
+              top: playerLocation.y + CANVAS_DIMENSIONS.height / 4,
+              left: playerLocation.x + 32
+            }}
           />
           <img
             src="/final3.jfif"
             alt="Final Image"
             className="absolute h-72 animate-spin-3 transform-[translateY(-200vh)]"
+                        style={{
+              top: playerLocation.y + CANVAS_DIMENSIONS.height / 4,
+              left: playerLocation.x + 32
+            }}
           />
           <img
             src="/final4.jfif"
             alt="Final Image"
             className="absolute h-72 animate-spin-4 transform-[translateY(-200vh)]"
+                        style={{
+              top: playerLocation.y + CANVAS_DIMENSIONS.height / 4,
+              left: playerLocation.x + 32
+            }}
           />
           <img
             src="/final5.jfif"
             alt="Final Image"
             className="absolute h-72 animate-spin-5 transform-[translateY(-200vh)]"
+                        style={{
+              top: playerLocation.y + CANVAS_DIMENSIONS.height / 4,
+              left: playerLocation.x + 32
+            }}
           />
           <img
             src="/final6.jfif"
             alt="Final Image"
             className="absolute h-72 animate-spin-6 transform-[translateY(-200vh)]"
+                        style={{
+              top: playerLocation.y + CANVAS_DIMENSIONS.height / 4,
+              left: playerLocation.x + 32
+            }}
           />
           <img
             src="/final7.jfif"
             alt="Final Image"
             className="absolute h-72 animate-spin-7 transform-[translateY(-200vh)]"
+                        style={{
+              top: playerLocation.y + CANVAS_DIMENSIONS.height / 4,
+              left: playerLocation.x + 32
+            }}
           />
           <img
             src="/final8.jfif"
             alt="Final Image"
             className="absolute h-72 animate-spin-8 transform-[translateY(-200vh)]"
+                        style={{
+              top: playerLocation.y + CANVAS_DIMENSIONS.height / 4,
+              left: playerLocation.x + 32
+            }}
           />
           <img
             src="/final9.jfif"
             alt="Final Image"
             className="absolute h-72 animate-spin-9 transform-[translateY(-200vh)]"
+                        style={{
+              top: playerLocation.y + CANVAS_DIMENSIONS.height / 4,
+              left: playerLocation.x + 32
+            }}
           />
           <img
             src="/final10.jfif"
             alt="Final Image"
             className="absolute h-72 animate-spin-10 transform-[translateY(-200vh)]"
+                        style={{
+              top: playerLocation.y + CANVAS_DIMENSIONS.height / 4,
+              left: playerLocation.x + 32
+            }}
           />
         </>
       )}
@@ -366,11 +477,11 @@ const Game: FC = () => {
           const rand = Math.random();
           let img: string;
           if (rand < 0.33) {
-            img = "/projectiles/bahnmi1.jfif";
+            img = "/projectiles/bahnmi1.png";
           } else if (rand < 0.66) {
-            img = "/projectiles/bahnmi2.jfif";
+            img = "/projectiles/bahnmi2.png";
           } else {
-            img = "/projectiles/bahnmi3.jfif";
+            img = "/projectiles/bahnmi3.png";
           }
 
           return (

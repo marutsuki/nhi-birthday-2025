@@ -78,10 +78,15 @@ export class LaserEnemy extends HorizontalMovingEnemy {
   }
 }
 
+const image1: HTMLImageElement = new Image(20, 20);
+const image2: HTMLImageElement = new Image(20, 20);
+const image3: HTMLImageElement = new Image(20, 20);
+image1.src = "/projectiles/bahnmi1.png";
+image2.src = "/projectiles/bahnmi2.png";
+image3.src = "/projectiles/bahnmi3.png";
+
 export class LaserProjectile extends Projectile {
-  private image1: HTMLImageElement = new Image(20, 20);
-  private image2: HTMLImageElement = new Image(20, 20);
-  private image3: HTMLImageElement = new Image(20, 20);
+
 
   constructor(
     x: number,
@@ -103,17 +108,14 @@ export class LaserProjectile extends Projectile {
 
     const speed = 3;
     super(x, y, width, height, speed, direction, 5);
-    this.image1.src = "/projectiles/bahnmi1.jfif";
-    this.image2.src = "/projectiles/bahnmi2.jfif";
-    this.image3.src = "/projectiles/bahnmi3.jfif";
 
     rand = Math.random();
     if (rand < 0.33) {
-      this.image = this.image1;
+      this.image = image1;
     } else if (rand < 0.66) {
-      this.image = this.image2;
+      this.image = image2;
     } else {
-      this.image = this.image3;
+      this.image = image3;
     }
   }
 
