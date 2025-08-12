@@ -71,6 +71,12 @@ export class Enemy extends GameObject {
   }
 }
 
+const image = new Image();
+image.src = "/enemy-basic.jfif";
+
+const nhi4head = new Image();
+nhi4head.src = "/nhi4head.png";
+
 export class HorizontalMovingEnemy extends Enemy {
   private firstDraw: boolean = true;
   constructor(
@@ -78,11 +84,18 @@ export class HorizontalMovingEnemy extends Enemy {
     y: number,
     width: number,
     height: number,
-    image: HTMLImageElement,
     private velocity: number = 4,
     hp: number = 100
   ) {
-    super(x, y, width, height, image, hp);
+    const rand = Math.random();
+    let img;
+    if (rand < 0.5) {
+      img = image;
+    } else {
+      img = nhi4head;
+    }
+    
+    super(x, y, width, height, img, hp);
   }
 
   update() {

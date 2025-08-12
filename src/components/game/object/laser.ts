@@ -16,7 +16,7 @@ export class LaserEnemy extends HorizontalMovingEnemy {
     velocity: number = 1
   ) {
     const image = new Image(80, 80);
-    super(x, y, width, height, image, velocity, 200);
+    super(x, y, width, height, velocity, 200);
     this.readyImage = image;
     this.readyImage.src = "/enemies/laser/laser-ready.jfif";
     this.activeImage.src = "/enemies/laser/laser-active.jfif";

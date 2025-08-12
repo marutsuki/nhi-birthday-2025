@@ -19,9 +19,7 @@ export const enemyBasic = (
   y: number,
   velocity?: number
 ): GameObject => {
-  const image = new Image();
-  image.src = "/enemy-basic.jfif";
-  return new HorizontalMovingEnemy(x, y, 50, 50, image, velocity);
+  return new HorizontalMovingEnemy(x, y, 50, 50, velocity);
 };
 
 export const enemySpitter = (

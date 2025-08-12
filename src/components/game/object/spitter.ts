@@ -15,7 +15,7 @@ export class SpitterEnemy extends HorizontalMovingEnemy {
     velocity: number = 2
   ) {
     const image = new Image(80, 80);
-    super(x, y, width, height, image, velocity, 200);
+    super(x, y, width, height, velocity, 200);
     this.readyImage = image;
 
     const rand = Math.random();
