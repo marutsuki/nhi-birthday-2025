@@ -1,6 +1,10 @@
 @import "tailwindcss";
 
 @theme {
+  --animate-better-pulse: better-pulse 5s ease-in-out 0ms infinite;
+  --animate-better-pulse-1: better-pulse 5s ease-in-out 250ms infinite;
+  --animate-better-pulse-2: better-pulse 5s ease-in-out 2ms infinite;
+  --animate-better-pulse-3: better-pulse 5s ease-in-out 4ms infinite;
   --animate-flash: flash 1.25s linear 3600ms forwards;
   --animate-spin-1: spin1 2s ease-out 0ms forwards;
   --animate-spin-2: spin2 2s ease-out 300ms forwards;
@@ -14,6 +18,24 @@
   --animate-spin-10: spin10 2s ease-out 2700ms forwards;
   --animate-spin-11: spin11 2s ease-out 3000ms forwards;
   --animate-spin-12: spin12 2s ease-out 3300ms forwards;
+}
+
+@keyframes better-pulse {
+  0% {
+    transform: scale(1);
+    filter: blur(0);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    filter: blur(5px);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    filter: blur(0);
+    opacity: 1;
+  }
 }
 
 @keyframes flash {
