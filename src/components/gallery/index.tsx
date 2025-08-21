@@ -8,6 +8,7 @@ const images: MemoryBubbleProps[] = [
     size: "lg",
     imageSrc: "/public/gallery/image0.jfif",
     text: "My very first photo of u 🥺. Also the night we started this journey together !!! I can't believe we've made it to ur bday now!",
+    date: "24th March 2025",
   },
   {
     x: 50,
@@ -15,6 +16,7 @@ const images: MemoryBubbleProps[] = [
     size: "md",
     imageSrc: "/public/gallery/image1.jfif",
     text: "One of our very first dates at westfield :0. honestly i loved this photo so much, we look so cute tgt :3",
+    date: "29th March 2025",
   },
   {
     x: 400,
@@ -22,6 +24,7 @@ const images: MemoryBubbleProps[] = [
     size: "sm",
     imageSrc: "/public/gallery/image2.jfif",
     text: "i swear this photo was supposed to look really cute but it ended up superzooming on ur face wtf. still my baby tho heh",
+    date: "20th April 2025",
   },
   {
     x: 800,
@@ -29,6 +32,7 @@ const images: MemoryBubbleProps[] = [
     size: "lg",
     imageSrc: "/public/gallery/image3.jfif",
     text: "This photo was good but my belly OUGH 😫 MY BEER BELLY HELP",
+    date: "20th April 2025",
   },
   {
     x: 1300,
@@ -36,6 +40,7 @@ const images: MemoryBubbleProps[] = [
     size: "md",
     imageSrc: "/public/gallery/image4.jfif",
     text: "You have so many incriminating photos of me, atp the only thing i can do is to accept it :< this was our first time trying okami at mornington !!! boi, we ate sm 😫",
+    date: "26th April 2025",
   },
   {
     x: 1500,
@@ -43,6 +48,7 @@ const images: MemoryBubbleProps[] = [
     size: "sm",
     imageSrc: "/public/gallery/image5.jfif",
     text: "hehe this was a selfie u took and its one of my favs actually :3 ur so adorable ",
+    date: "27th April 2025",
   },
   {
     x: 1900,
@@ -50,6 +56,7 @@ const images: MemoryBubbleProps[] = [
     size: "lg",
     imageSrc: "/public/gallery/image6.jfif",
     text: "Part of our Mornington trip! damn wtf did u do the statue of liberty D:",
+    date: "27th April 2025",
   },
   {
     x: 2300,
@@ -57,6 +64,7 @@ const images: MemoryBubbleProps[] = [
     size: "md",
     imageSrc: "/public/gallery/image7.jfif",
     text: "one of my fav couple shots of us :3, for once we both look good in a photo LMAO",
+    date: "27th April 2025",
   },
   {
     x: 2500,
@@ -64,6 +72,7 @@ const images: MemoryBubbleProps[] = [
     size: "sm",
     imageSrc: "/public/gallery/image8.jfif",
     text: "U LOOK LIKE A LIL BABY HERE OMF 🥺🥺🥺 my baby hehe :>",
+    date: "4th May 2025",
   },
   {
     x: 2800,
@@ -71,6 +80,7 @@ const images: MemoryBubbleProps[] = [
     size: "lg",
     imageSrc: "/public/gallery/image9.jfif",
     text: "I can't believe I actually tried to wear this outfit holy, thanks for putting up with my shenanigans all the time :< ohhh and we should get back to guessing Jellycat prices HAHAHA",
+    date: "8th May 2025",
   },
   {
     x: 3400,
@@ -78,6 +88,7 @@ const images: MemoryBubbleProps[] = [
     size: "sm",
     imageSrc: "/public/gallery/image10.jfif",
     text: "oml u know so many good places in melb, honestly ur the local and im the foreigner 😒 lets go to footscray more !!!",
+    date: "10th May 2025",
   },
   {
     x: 3700,
@@ -85,6 +96,7 @@ const images: MemoryBubbleProps[] = [
     size: "lg",
     imageSrc: "/public/gallery/image11.jfif",
     text: "One of our most iconic accessories hehe. Honestly this bracelet is the cutest thing I've ever worn in my life and reminds me of how emotionally attached to each other we are :3",
+    date: "10th May 2025",
   },
   {
     x: 4200,
@@ -92,6 +104,7 @@ const images: MemoryBubbleProps[] = [
     size: "sm",
     imageSrc: "/public/gallery/image12.jfif",
     text: "OOOP out of order again...! This was quite the memory, drenched blanket, mixed and chips lost glasses...",
+    date: "29th March 2025",
   },
   {
     x: 4300,
@@ -99,6 +112,7 @@ const images: MemoryBubbleProps[] = [
     size: "sm",
     imageSrc: "/public/gallery/image13.jfif",
     text: "Ur first time at Bao Mi !!! I can't believe u dissed my pho like that 😡 really wanna try ur mums cooking one day....",
+    date: "16th May 2025",
   },
   {
     x: 4600,
@@ -106,14 +120,15 @@ const images: MemoryBubbleProps[] = [
     size: "lg",
     imageSrc: "/public/gallery/image14.jfif",
     text: "Our 2 month anniv !!! Honestly one of the most breathtaking night experiences in my life, despite the setbacks afterwards, I felt we really established our trust in each other in this moment <3",
+    date: "24th May 2025",
   },
   {
     x: 5000,
     y: 200,
     size: "md",
     imageSrc: "/public/gallery/image15.jfif",
-
-    text: "OMG U DONT KNOW HOW MUCH I LOVE THIS PHOTO THIS IS MY FAV PHOTO OF U 🥺🥺🥺",
+    text: "OMG U DONT KNOW HOW MUCH I LOVE THIS PHOTO THIS IS MY FAV PHOTO OF U 🥺🥺🥺 I LOVE THIS PHOTO TO AN OBSESSED DEGREE 💜❤️💜",
+    date: "28th May 2025",
   },
   {
     x: 5200,
@@ -121,6 +136,7 @@ const images: MemoryBubbleProps[] = [
     size: "sm",
     imageSrc: "/public/gallery/image16.jfif",
     text: "hehe im going to continue to stalk u... be on ur guard :3",
+    date: "12nd June 2025",
   },
   {
     x: 5500,
@@ -128,6 +144,7 @@ const images: MemoryBubbleProps[] = [
     size: "lg",
     imageSrc: "/public/gallery/image17.jfif",
     text: "awwwww ...! this is also another fav of mine, u look so pretty in this photo !",
+    date: "22nd June 2025",
   },
   {
     x: 6000,
@@ -135,6 +152,7 @@ const images: MemoryBubbleProps[] = [
     size: "md",
     imageSrc: "/public/gallery/image18.jfif",
     text: "Feat Grandma !!! Honestly my Grandma loves u so much, not as much as me tho ofc",
+    date: "22nd June 2025",
   },
   {
     x: 6200,
@@ -142,6 +160,7 @@ const images: MemoryBubbleProps[] = [
     size: "sm",
     imageSrc: "/public/gallery/image19.jfif",
     text: "Ichi Katsu date ! u look really pretty here heh :3 also i hope u put up with my fast eating habits :c",
+    date: "24th June 2025",
   },
   {
     x: 6500,
@@ -149,6 +168,7 @@ const images: MemoryBubbleProps[] = [
     size: "lg",
     imageSrc: "/public/gallery/image20.jfif",
     text: "The Light Show night :DD Honestly I had so much fun, and it would be not even half the amount of fun if it wasn't for u being there with me c:",
+    date: "28th June 2025",
   },
   {
     x: 7000,
@@ -156,13 +176,15 @@ const images: MemoryBubbleProps[] = [
     size: "md",
     imageSrc: "/public/gallery/image21.jfif",
     text: "The amount of attempts we tried to get this one taken LOL still tho this one turned out good hehe!",
+    date: "28th June 2025",
   },
   {
     x: 7200,
     y: 700,
     size: "sm",
     imageSrc: "/public/gallery/image22.jfif",
-    text: "Little Africa !!! We really should go back here, the food was soooo tasty 🤤",
+    text: "Little Africa !!! We really should go back here, the food was soooo tasty 🤤 Also, this was all one night?!? wtf",
+    date: "28th June 2025",
   },
   {
     x: 7400,
@@ -170,6 +192,7 @@ const images: MemoryBubbleProps[] = [
     size: "lg",
     imageSrc: "/public/gallery/image23.jfif",
     text: "OUT OF ORDER AGAIN...! One of our earlier dates at the Soba place (i forgor the name) ! Honestly this place was so yummy HOW DO U KNOW SO MANY GOOD PLACES AHHHH",
+    date: "31st March 2025",
   },
   {
     x: 8000,
@@ -177,6 +200,7 @@ const images: MemoryBubbleProps[] = [
     size: "md",
     imageSrc: "/public/gallery/image24.jfif",
     text: "ur departure for ur bali trip :< honestly was so excited to see u again on the day of ur return 🥺",
+    date: "4th July 2025",
   },
   {
     x: 8200,
@@ -184,6 +208,7 @@ const images: MemoryBubbleProps[] = [
     size: "sm",
     imageSrc: "/public/gallery/image25.jfif",
     text: "😏",
+    date: "11st July 2025",
   },
   {
     x: 8500,
@@ -191,6 +216,7 @@ const images: MemoryBubbleProps[] = [
     size: "lg",
     imageSrc: "/public/gallery/image26.jfif",
     text: "thanks for being so patient with me, and always being there to goof around with me :3 i honestly feel so appreciated and loved by u. just lmk if it gets too much ofc !",
+    date: "12nd July 2025",
   },
   {
     x: 9000,
@@ -198,6 +224,7 @@ const images: MemoryBubbleProps[] = [
     size: "md",
     imageSrc: "/public/gallery/image27.jfif",
     text: "👎 bad joke 👎",
+    date: "13rd July 2025",
   },
   {
     x: 9200,
@@ -205,6 +232,7 @@ const images: MemoryBubbleProps[] = [
     size: "sm",
     imageSrc: "/public/gallery/image28.jfif",
     text: "hehehe our second time at Sebastian ! honestly the earl grey was kinda... idk BAHAHAHA",
+    date: "15th July 2025",
   },
   {
     x: 9500,
@@ -212,6 +240,7 @@ const images: MemoryBubbleProps[] = [
     size: "lg",
     imageSrc: "/public/gallery/image29.jfif",
     text: "see !!! i told u there was a written contract for us :3",
+    date: "17th July 2025",
   },
   {
     x: 10000,
@@ -219,6 +248,55 @@ const images: MemoryBubbleProps[] = [
     size: "md",
     imageSrc: "/public/gallery/image30.jfif",
     text: "Our 4 month anniv !!! i hope u enjoyed one of my fav japanese places in Melb :3",
+    date: "24th July 2025",
+  },
+  {
+    x: 10200,
+    y: 700,
+    size: "sm",
+    imageSrc: "/public/gallery/image40.jfif",
+    text: "my 2 lil boibies 🥺🥺🥺 this photo of u2 is sooooo precious...",
+    date: "30th July August 2025",
+  },
+  {
+    x: 10500,
+    y: 300,
+    size: "lg",
+    imageSrc: "/public/gallery/image41.jfif",
+    text: "My bday !!!! :DD Here's the cute photo of u and that massive piece of bread i got u :3",
+    date: "2nd August 2025",
+  },
+  {
+    x: 10800,
+    y: 100,
+    size: "sm",
+    imageSrc: "/public/gallery/image44.jfif",
+    text: "Our brunch date at Fitzroy !!! this photo of u was sooooo cuteeeee ❤️❤️❤️",
+    date: "9th August 2025",
+  },
+  {
+    x: 11100,
+    y: 600,
+    size: "md",
+    imageSrc: "/public/gallery/image42.jfif",
+    text: "The day we went to Fitzroy to go thrift shopping !!! Didn't end up finding much there tho HAHAHAH",
+    date: "9th August 2025",
+  },
+  {
+    x: 11100,
+    y: 600,
+    size: "md",
+    imageSrc: "/public/gallery/image43.jfif",
+    text: "After we got back, this was when we were cutting up everything... and i honestly sucked....... 😩 u were good at it tho !",
+    date: "9th August 2025",
+  },
+  {
+    x: 11400,
+    y: 200,
+    size: "md",
+    imageSrc: "/public/gallery/image45.jfif",
+    text: "DONT TRY TO HIDE 😠 still not giving up taking stalker photos of u hehe :3 ur gonna put up with me forever MWAHAHA",
+    date: "14th August 2025",
   },
 ];
 
@@ -234,6 +312,7 @@ export default function Gallery() {
           size={image.size}
           imageSrc={image.imageSrc}
           text={image.text}
+          date={image.date}
         />
       ))}
     </div>

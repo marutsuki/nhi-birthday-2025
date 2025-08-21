@@ -1,6 +1,9 @@
 @import "tailwindcss";
 
 @theme {
+  --font-delius: "Delius Swash Caps", cursive;
+  --font-unicase: "Delius Unicase", cursive;
+  --font-special: "Edu NSW ACT Cursive", cursive;
   --animate-better-pulse: better-pulse 5s ease-in-out 0ms infinite;
   --animate-better-pulse-1: better-pulse 5s ease-in-out 250ms infinite;
   --animate-better-pulse-2: better-pulse 5s ease-in-out 2ms infinite;

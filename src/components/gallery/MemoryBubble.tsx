@@ -8,6 +8,7 @@ export type MemoryBubbleProps = {
   imageSrc: string;
   type?: number;
   text: string;
+  date?: string;
 };
 
 export default function MemoryBubble({
@@ -17,6 +18,7 @@ export default function MemoryBubble({
   imageSrc,
   type = 0,
   text,
+  date = "",
 }: MemoryBubbleProps) {
   const [active, setActive] = useState(false);
   return (
@@ -44,14 +46,19 @@ export default function MemoryBubble({
       />
       <div
         className={clsx(
-          "absolute duration-200 flex items-center justify-center inset-0 z-50 bg-[rgba(0,0,0,0.5)] p-2 rounded-full",
+          "absolute duration-200 flex items-center justify-center inset-0 z-50 bg-[rgba(0,0,0,0.5)] p-2 rounded-full flex-col gap-4",
           {
             "opacity-100": active,
             "opacity-0": !active,
           }
         )}
       >
-        <p className={clsx("relative text-white text-center")}>{text}</p>
+        <p className={clsx("relative text-white text-center font-delius")}>
+          {text}
+        </p>
+        <p className="relative text-center text-white font-special underline">
+          {date}
+        </p>
       </div>
       <div>
         <img
