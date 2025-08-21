@@ -43,7 +43,7 @@ export class LucienBossEnemy extends Enemy {
     const image = new Image();
     image.src = "/enemies/boss/lucien.png";
 
-    super(x, y, 200, 200, image, 4000);
+    super(x, y, 200, 200, image, 1);
 
     this.open = new Image();
     this.open.src = "/enemies/boss/lucien1.png";
@@ -201,7 +201,13 @@ export class LucienBossEnemy extends Enemy {
       } else {
         img = this.hurt2;
       }
-      ctx.drawImage(img, this.x - 15, this.y - 15, this.width + 30, this.height + 30);
+      ctx.drawImage(
+        img,
+        this.x - 15,
+        this.y - 15,
+        this.width + 30,
+        this.height + 30
+      );
       this.hit = false;
     } else {
       if (this.attacking) {
@@ -215,7 +221,6 @@ export class LucienBossEnemy extends Enemy {
     } else {
       this.framesSinceLastHit++;
     }
-
   }
 
   override dead(): boolean {

@@ -58,180 +58,180 @@
 
 @keyframes spin1 {
   0% {
-    transform: translate(1000px, 0px) rotate(0deg);
+    transform: translate(calc(1000px - 50%), calc(0px - 50%)) rotate(0deg);
     opacity: 1;
   }
   90% {
-    transform: translate(0px, 0px) rotate(360deg);
+    transform: translate(calc(0px - 50%), calc(0px - 50%)) rotate(360deg);
     opacity: 1;
   }
   100% {
-    transform: translate(0px, 0px) rotate(360deg);
+    transform: translate(calc(0px - 50%), calc(0px - 50%)) rotate(360deg);
     opacity: 0;
   }
 }
 
 @keyframes spin2 {
   0% {
-    transform: translate(866px, 500px) rotate(0deg);
+    transform: translate(calc(866px - 50%), calc(500px - 50%)) rotate(0deg);
     opacity: 1;
   }
   90% {
-    transform: translate(0px, 0px) rotate(360deg);
+    transform: translate(calc(0px - 50%), calc(0px - 50%)) rotate(360deg);
     opacity: 1;
   }
   100% {
-    transform: translate(0px, 0px) rotate(360deg);
+    transform: translate(calc(0px - 50%), calc(0px - 50%)) rotate(360deg);
     opacity: 0;
   }
 }
 
 @keyframes spin3 {
   0% {
-    transform: translate(500px, 866px) rotate(0deg);
+    transform: translate(calc(500px - 50%), calc(866px - 50%)) rotate(0deg);
     opacity: 1;
   }
   90% {
-    transform: translate(0px, 0px) rotate(360deg);
+    transform: translate(calc(0px - 50%), calc(0px - 50%)) rotate(360deg);
     opacity: 1;
   }
   100% {
-    transform: translate(0px, 0px) rotate(360deg);
+    transform: translate(calc(0px - 50%), calc(0px - 50%)) rotate(360deg);
     opacity: 0;
   }
 }
 
 @keyframes spin4 {
   0% {
-    transform: translate(0px, 1000px) rotate(0deg);
+    transform: translate(calc(0px - 50%), calc(1000px - 50%)) rotate(0deg);
     opacity: 1;
   }
   90% {
-    transform: translate(0px, 0px) rotate(360deg);
+    transform: translate(calc(0px - 50%), calc(0px - 50%)) rotate(360deg);
     opacity: 1;
   }
   100% {
-    transform: translate(0px, 0px) rotate(360deg);
+    transform: translate(calc(0px - 50%), calc(0px - 50%)) rotate(360deg);
     opacity: 0;
   }
 }
 
 @keyframes spin5 {
   0% {
-    transform: translate(-500px, 866px) rotate(0deg);
+    transform: translate(calc(-500px - 50%), calc(866px - 50%)) rotate(0deg);
     opacity: 1;
   }
   90% {
-    transform: translate(0px, 0px) rotate(360deg);
+    transform: translate(calc(0px - 50%), calc(0px - 50%)) rotate(360deg);
     opacity: 1;
   }
   100% {
-    transform: translate(0px, 0px) rotate(360deg);
+    transform: translate(calc(0px - 50%), calc(0px - 50%)) rotate(360deg);
     opacity: 0;
   }
 }
 
 @keyframes spin6 {
   0% {
-    transform: translate(-866px, 500px) rotate(0deg);
+    transform: translate(calc(-866px - 50%), calc(500px - 50%)) rotate(0deg);
     opacity: 1;
   }
   90% {
-    transform: translate(0px, 0px) rotate(360deg);
+    transform: translate(calc(0px - 50%), calc(0px - 50%)) rotate(360deg);
     opacity: 1;
   }
   100% {
-    transform: translate(0px, 0px) rotate(360deg);
+    transform: translate(calc(0px - 50%), calc(0px - 50%)) rotate(360deg);
     opacity: 0;
   }
 }
 
 @keyframes spin7 {
   0% {
-    transform: translate(-1000px, 0px) rotate(0deg);
+    transform: translate(calc(-1000px - 50%), calc(0px - 50%)) rotate(0deg);
     opacity: 1;
   }
   90% {
-    transform: translate(0px, 0px) rotate(360deg);
+    transform: translate(calc(0px - 50%), calc(0px - 50%)) rotate(360deg);
     opacity: 1;
   }
   100% {
-    transform: translate(0px, 0px) rotate(360deg);
+    transform: translate(calc(0px - 50%), calc(0px - 50%)) rotate(360deg);
     opacity: 0;
   }
 }
 
 @keyframes spin8 {
   0% {
-    transform: translate(-866px, -500px) rotate(0deg);
+    transform: translate(calc(-866px - 50%), calc(-500px - 50%)) rotate(0deg);
     opacity: 1;
   }
   90% {
-    transform: translate(0px, 0px) rotate(360deg);
+    transform: translate(calc(0px - 50%), calc(0px - 50%)) rotate(360deg);
     opacity: 1;
   }
   100% {
-    transform: translate(0px, 0px) rotate(360deg);
+    transform: translate(calc(0px - 50%), calc(0px - 50%)) rotate(360deg);
     opacity: 0;
   }
 }
 
 @keyframes spin9 {
   0% {
-    transform: translate(-500px, -866px) rotate(0deg);
+    transform: translate(calc(-500px - 50%), calc(-866px - 50%)) rotate(0deg);
     opacity: 1;
   }
   90% {
-    transform: translate(0px, 0px) rotate(360deg);
+    transform: translate(calc(0px - 50%), calc(0px - 50%)) rotate(360deg);
     opacity: 1;
   }
   100% {
-    transform: translate(0px, 0px) rotate(360deg);
+    transform: translate(calc(0px - 50%), calc(0px - 50%)) rotate(360deg);
     opacity: 0;
   }
 }
 
 @keyframes spin10 {
   0% {
-    transform: translate(0px, -1000px) rotate(0deg);
+    transform: translate(calc(0px - 50%), calc(-1000px - 50%)) rotate(0deg);
     opacity: 1;
   }
   90% {
-    transform: translate(0px, 0px) rotate(360deg);
+    transform: translate(calc(0px - 50%), calc(0px - 50%)) rotate(360deg);
     opacity: 1;
   }
   100% {
-    transform: translate(0px, 0px) rotate(360deg);
+    transform: translate(calc(0px - 50%), calc(0px - 50%)) rotate(360deg);
     opacity: 0;
   }
 }
 
 @keyframes spin11 {
   0% {
-    transform: translate(500px, -866px) rotate(0deg);
+    transform: translate(calc(500px - 50%), calc(-866px - 50%)) rotate(0deg);
     opacity: 1;
   }
   90% {
-    transform: translate(0px, 0px) rotate(360deg);
+    transform: translate(calc(0px - 50%), calc(0px - 50%)) rotate(360deg);
     opacity: 1;
   }
   100% {
-    transform: translate(0px, 0px) rotate(360deg);
+    transform: translate(calc(0px - 50%), calc(0px - 50%)) rotate(360deg);
     opacity: 0;
   }
 }
 
 @keyframes spin12 {
   0% {
-    transform: translate(866px, -500px) rotate(0deg);
+    transform: translate(calc(866px - 50%), calc(-500px - 50%)) rotate(0deg);
     opacity: 1;
   }
   90% {
-    transform: translate(0px, 0px) rotate(360deg);
+    transform: translate(calc(0px - 50%), calc(0px - 50%)) rotate(360deg);
     opacity: 1;
   }
   100% {
-    transform: translate(0px, 0px) rotate(360deg);
+    transform: translate(calc(0px - 50%), calc(0px - 50%)) rotate(360deg);
     opacity: 0;
   }
 }

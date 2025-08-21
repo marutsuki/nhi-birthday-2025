@@ -6,9 +6,13 @@ function App() {
   const [tab, setTab] = useState<"gallery" | "game">("gallery");
   return (
     <>
-      <header className="fixed top-0 right-0 px-16 py-4">
-        <button onClick={() => setTab("gallery")}>Gallery</button>
-        <button onClick={() => setTab("game")}>Game</button>
+      <header className="fixed top-0 right-0 px-16 py-4 flex gap-2 font-unicase z-[1000]">
+        <button className="cursor-pointer" onClick={() => setTab("gallery")}>
+          Gallery
+        </button>
+        <button className="cursor-pointer" onClick={() => setTab("game")}>
+          Game
+        </button>
       </header>
       <div className="h-screen overflow-hidden ">
         <div className="fixed inset-0 bg-[linear-gradient(319deg,#6a5acd_0%,#c54b8c_37%,#b284be_100%)] opacity-40" />

@@ -11,7 +11,7 @@ export const heroNhi = (
 ): Hero => {
   const image = new Image();
   image.src = "/nhi.jfif";
-  return new Hero(x, y, 50, 50, image, projectiles);
+  return new Hero(x, y, 70, 80, image, projectiles);
 };
 
 export const enemyBasic = (

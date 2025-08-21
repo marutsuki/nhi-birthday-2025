@@ -49,7 +49,11 @@ export class SpitterEnemy extends HorizontalMovingEnemy {
         this.type === 1 ? cinna : mofu
       );
       this.projectiles.set(proj.id, proj);
-      new Audio("/sounds/spit.ogg").play();
+      if (this.type === 1) {
+        new Audio("/sounds/spit.ogg").play();
+      } else {
+        new Audio("/sounds/nhimoan.mp3").play();
+      }
     }
   }
 
@@ -82,7 +86,7 @@ mofu.src = "/projectiles/mofusand.png";
 
 export class SpitProjectile extends Projectile {
   constructor(x: number, y: number, image: HTMLImageElement) {
-    const width = 10;
+    const width = image === cinna ? 15 : 10;
     const height = 10;
     const speed = 3;
     super(x, y, width, height, speed, { x: 0, y: 1 }, 10, image);
@@ -94,6 +98,12 @@ export class SpitProjectile extends Projectile {
 
   render(ctx: CanvasRenderingContext2D) {
     ctx.fillStyle = "green"; // Color for spit projectile
-    ctx.drawImage(this.image, this.x - 15, this.y - 15, this.width + 30, this.height + 30);
+    ctx.drawImage(
+      this.image,
+      this.x - 15,
+      this.y - 15,
+      this.width + 30,
+      this.height + 30
+    );
   }
 }

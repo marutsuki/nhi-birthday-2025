@@ -300,7 +300,6 @@ const images: MemoryBubbleProps[] = [
   },
 ];
 
-console.log(images.length);
 export default function Gallery() {
   return (
     <div className="flex flex-col items-center justify-center h-full overflow-x-auto overflow-y-hidden">
