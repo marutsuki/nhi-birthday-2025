@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import type { MemoryBubbleProps } from "./MemoryBubble";
 import MemoryBubble from "./MemoryBubble";
 
@@ -300,7 +301,23 @@ const images: MemoryBubbleProps[] = [
   },
 ];
 
+const call = new Audio("/call.m4a");
+const tapdance = new Audio("/tapdance.mp3");
+
 export default function Gallery() {
+  useEffect(() => {
+    setTimeout(() => {
+      call.play().catch((error) => {
+        console.error("Error playing call sound:", error);
+      });
+    }, 10000);
+
+    setTimeout(() => {
+      tapdance.play().catch((error) => {
+        console.error("Error playing tapdance sound:", error);
+      });
+    }, 40000);
+  }, []);
   return (
     <div className="flex flex-col items-center justify-center h-full overflow-x-auto overflow-y-hidden">
       {images.map((image, index) => (

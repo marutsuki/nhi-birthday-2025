@@ -48,6 +48,8 @@ const FINAL_LASER_IMAGES = [
 
 const slaps = new Audio("/sounds/slaps.wav");
 
+const bgm = new Audio("/fallen_star.mp3");
+
 const Game: FC = () => {
   const spam = useRef(0);
   const spamButton = useRef<HTMLButtonElement>(null);
@@ -56,17 +58,20 @@ const Game: FC = () => {
   const [bossLocation, setBossLocation] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
+    bgm.loop = true;
+    bgm.volume = 0.5;
+    bgm.play();
+  }, []);
+  useEffect(() => {
     if (state === "game") return;
     const el = (key: KeyboardEvent) => {
       if (state === "finish" && key.key === " ") {
         spam.current = spam.current + 1;
 
-        console.log(spam.current);
-        if (spam.current > 0) {
+        if (spam.current > 40) {
           setState("finished");
         }
 
-        console.log("red");
         const b = spamButton.current;
         if (b) {
           b.style.background = "red";

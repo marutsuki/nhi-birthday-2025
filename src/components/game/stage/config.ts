@@ -24,15 +24,6 @@ export const GAME_STAGES = (
       new GameStage([
         {
           wait: 0,
-          objects: [
-            hero,
-            enemyBoss(CANVAS_DIMENSIONS.width / 2 - 100, 20, projectiles),
-          ],
-        },
-      ]),
-      new GameStage([
-        {
-          wait: 0,
           objects: [hero],
         },
         {
