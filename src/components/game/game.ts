@@ -9,7 +9,7 @@ export const initGame = (canvas: HTMLCanvasElement) => {
     return;
   }
 
-  new Promise<HTMLImageElement>((resolve) => {
+  return new Promise<HTMLImageElement>((resolve) => {
     const img = new Image();
     img.src = "/bg.png";
 
@@ -81,7 +81,7 @@ const gameLoop = (canvas: HTMLCanvasElement, bg: HTMLImageElement) => {
     });
   };
 
-  new Animator(
+  const anim = new Animator(
     60,
     (t) => {
       update(t);
@@ -93,7 +93,9 @@ const gameLoop = (canvas: HTMLCanvasElement, bg: HTMLImageElement) => {
     () => {
       console.log("Game stopped");
     }
-  ).start();
+  );
+  anim.start();
+  return () => anim.stop();
 };
 
 /** A simple animator that updates the simulation at a fixed frame rate.*/
@@ -106,7 +108,9 @@ class Animator {
   private lastUpdate: number = 0;
   /** The frequency to update the simulation. */
   private frequency: number;
-
+  /** Whether the animation is stopped. */
+  private stopped: boolean = false;
+  
   /**
    * Creates a new {@link Animator} instance.
    *
@@ -129,16 +133,21 @@ class Animator {
     this.onStart();
     this.lastUpdate = performance.now();
     this.lastFrame = requestAnimationFrame(this.update.bind(this));
+    this.stopped = false;
   }
 
   public stop() {
     cancelAnimationFrame(this.lastFrame);
     this.onStop();
+    this.stopped = true;
   }
   /**
    * An animation update frame.
    */
   private update() {
+    if (this.stopped) {
+      return;
+    }
     const currentTime = performance.now();
     const deltaTime = currentTime - this.lastUpdate;
     if (deltaTime >= this.frequency) {

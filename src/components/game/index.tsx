@@ -48,20 +48,14 @@ const FINAL_LASER_IMAGES = [
 
 const slaps = new Audio("/sounds/slaps.wav");
 
-const bgm = new Audio("/fallen_star.mp3");
-
 const Game: FC = () => {
   const spam = useRef(0);
   const spamButton = useRef<HTMLButtonElement>(null);
+  const canvas = useRef<HTMLCanvasElement>(null);
   const [state, setState] = useState<"game" | "finish" | "finished">("game");
   const [playerLocation, setPlayerLocation] = useState({ x: 0, y: 0 });
   const [bossLocation, setBossLocation] = useState({ x: 0, y: 0 });
 
-  useEffect(() => {
-    bgm.loop = true;
-    bgm.volume = 0.5;
-    bgm.play();
-  }, []);
   useEffect(() => {
     if (state === "game") return;
     const el = (key: KeyboardEvent) => {
@@ -357,11 +351,21 @@ const Game: FC = () => {
       }
     });
   }, []);
-  const callback = useCallback((canvas: HTMLCanvasElement) => {
+
+  useEffect(() => {
+    let stop: (() => void) | undefined | null;
     import("./game").then(({ initGame }) => {
-      initGame(canvas);
+      canvas.current && initGame(canvas.current)?.then(f => {
+        stop = f;
+      });
     });
+
+    return () => {
+      console.log(stop);
+      if (stop) stop();
+    };
   }, []);
+
   return (
     <div id="container" className="relative grid place-items-center h-full">
       {state === "finish" && (
@@ -435,7 +439,7 @@ const Game: FC = () => {
       ))}
       <div className="relative">
         <canvas
-          ref={callback}
+          ref={canvas}
           id="game-canvas"
           width={CANVAS_DIMENSIONS.width}
           height={CANVAS_DIMENSIONS.height}
