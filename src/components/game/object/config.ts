@@ -1,7 +1,8 @@
 import { LucienBossEnemy } from "./boss";
 import { GameObject, HorizontalMovingEnemy } from "./game-object";
+import { Hero } from "./hero";
 import { LaserEnemy } from "./laser";
-import { Hero, Projectile } from "./projectiles";
+import { Projectile } from "./projectiles";
 import { SpitterEnemy } from "./spitter";
 
 export const heroNhi = (

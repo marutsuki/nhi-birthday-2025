@@ -141,7 +141,7 @@ const Game: FC = () => {
       };
       return timing;
     };
-    let i: number;
+    let i: number | NodeJS.Timeout;
     const images = [...FINAL_LASER_IMAGES];
     const animateNext = () => {
       if (images.length === 0) return;
@@ -175,8 +175,8 @@ const Game: FC = () => {
     }, 12000);
     animateNext();
 
-    let i2: number;
-    let i3: number;
+    let i2: number | NodeJS.Timeout;
+    let i3: number | NodeJS.Timeout;
     setTimeout(() => {
       i2 = setInterval(() => {
         new Audio("/sounds/slap1.wav").play();

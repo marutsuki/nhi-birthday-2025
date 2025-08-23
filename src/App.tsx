@@ -17,10 +17,6 @@ const bgm = new Audio("/fallen_star.mp3");
 function App() {
   const timeouts = useRef<NodeJS.Timeout[]>([]);
   const [tab, setTab] = useState<"gallery" | "game">("gallery");
-  
-  useEffect(() => {
-
-  }, []);
 
   const playGalleryBgm = () => {
     perfect.currentTime = 0;
@@ -110,7 +106,7 @@ function App() {
 
             bgm.loop = true;
             bgm.currentTime = 0;
-            bgm.volume = 0.5;
+            bgm.volume = 0.3;
             bgm.play();
           }}
         >

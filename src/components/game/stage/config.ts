@@ -6,7 +6,8 @@ import {
   enemySpitter,
   heroNhi,
 } from "../object/config";
-import type { Hero, Projectile } from "../object/projectiles";
+import { Hero } from "../object/hero";
+import { Projectile } from "../object/projectiles";
 import { GameStage } from "./stage";
 
 export const GAME_STAGES = (

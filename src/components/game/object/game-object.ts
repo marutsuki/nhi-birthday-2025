@@ -102,13 +102,22 @@ export class HorizontalMovingEnemy extends Enemy {
     if (this.firstDraw) {
       this.firstDraw = false;
       const rand = Math.random();
-      if (rand < 0.33) {
-        new Audio("/sounds/dumamay1.ogg").play();
-      } else if (rand < 0.66) {
-        new Audio("/sounds/dumamay2.ogg").play();
+      let audio: HTMLAudioElement;
+      if (this.image === nhi4head) {
+        audio = new Audio("/ooga_booga.ogg");
+        audio.volume = 1;
       } else {
-        new Audio("/sounds/dumamay3.ogg").play();
+        if (rand < 0.33) {
+          audio = new Audio("/sounds/dumamay1.ogg")
+        } else if (rand < 0.66) {
+          audio = new Audio("/sounds/dumamay2.ogg");
+        } else {
+          audio = new Audio("/sounds/dumamay3.ogg");
+        }
+        audio.volume = 0.3;
       }
+
+      audio.play();
     }
     this.x += this.velocity;
     if (this.x > CANVAS_DIMENSIONS.width - this.width || this.x < 0) {
