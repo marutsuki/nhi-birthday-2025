@@ -4,6 +4,11 @@
   --font-delius: "Delius Swash Caps", cursive;
   --font-unicase: "Delius Unicase", cursive;
   --font-special: "Edu NSW ACT Cursive", cursive;
+  --animate-float: float 3s ease-in-out 0ms infinite;
+  --animate-float-1: float 3s ease-in-out 500ms infinite;
+  --animate-float-2: float 3s ease-in-out 1000ms infinite;
+  --animate-float-3: float 3s ease-in-out 1500ms infinite;
+  --animate-float-4: float 3s ease-in-out 2000ms infinite;
   --animate-light-pulse: light-pulse 2s ease-in-out 0ms infinite;
   --animate-glow: glow 2s ease-in-out 0ms infinite;
   --animate-glow-text: glow-text 2s ease-in-out 0ms infinite;
@@ -26,25 +31,38 @@
   --animate-spin-12: spin12 2s ease-out 3300ms forwards;
 }
 
+@keyframes float {
+  0%, 
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
 @keyframes light-pulse {
   0% {
     filter: drop-shadow(0 0 5px white);
+    transform: translateY(0);
   }
   50% {
     filter: drop-shadow(0 0 20px white);
+    transform: translateY(-20px);
   }
   100% {
     filter: drop-shadow(0 0 5px white);
+    transform: translateY(0);
   }
 }
 
 @keyframes glow {
   0%,
   100% {
-    filter: drop-shadow(0 0 40px rgb(174, 61, 255, 0.5)) drop-shadow(0 -20px 20px rgb(255, 103, 252, 0.5));
+    filter: drop-shadow(0 0 120px rgba(174, 61, 255, 1)) drop-shadow(0 -20px 20px rgba(255, 103, 252, 0.5));
   }
   50% {
-    filter: drop-shadow(0 0 80px white);
+    filter: drop-shadow(0 0 40px white);
   }
 }
 

@@ -21,6 +21,23 @@ export default function MemoryBubble({
   date = "",
 }: MemoryBubbleProps) {
   const [active, setActive] = useState(false);
+  function getSeed(str: string) {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      hash = str.charCodeAt(i) + ((hash << 5) - hash);
+      hash &= hash;
+    }
+    return Math.abs(hash);
+  }
+
+  function getRandomFromString(str: string) {
+    const seed = getSeed(str);
+    // Simple pseudo-random based on seed
+    return (Math.sin(seed) + 1) / 2;
+  }
+
+  const randomNumber = Math.floor(getRandomFromString(imageSrc) * 5);
+
   return (
     <div
       onClick={() => setActive(!active)}
@@ -30,6 +47,11 @@ export default function MemoryBubble({
         "w-96 h-96": size === "lg",
         "w-[40rem] h-[40rem]": size === "xl",
         invisible: size === "empty",
+        "animate-float": randomNumber % 5 === 0,
+        "animate-float-1": randomNumber % 5 === 1,
+        "animate-float-2": randomNumber % 5 === 2,
+        "animate-float-3": randomNumber % 5 === 3,
+        "animate-float-4": randomNumber % 5 === 4,
       })}
       style={{
         left: `${x}px`,
@@ -37,7 +59,7 @@ export default function MemoryBubble({
       }}
     >
       <div
-        className={clsx("absolute rounded-full", {
+        className={clsx("absolute rounded-full animate-glow", {
           "bg-[rgba(106,90,205,0.3)]": type === 0,
           "bg-[rgba(106,90,205,0.4)]": type === 1,
           "bg-[rgba(106,90,205,0.5)]": type === 2,
