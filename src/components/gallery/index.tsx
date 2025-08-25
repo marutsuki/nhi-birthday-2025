@@ -426,7 +426,7 @@ export default function Gallery() {
   return (
     <div className="flex flex-col items-center justify-center h-full overflow-x-auto overflow-y-hidden">
       {/* Falling particles */}
-      <div className="pointer-events-none absolute inset-0 z-0">
+      <div className="pointer-events-none fixed inset-0 z-0">
         {particles.map((p) => (
           <span
             key={p.id}
