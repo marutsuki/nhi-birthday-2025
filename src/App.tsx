@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Game from "./components/game";
 import Gallery from "./components/gallery";
 
@@ -39,7 +39,7 @@ function App() {
           console.error("Error playing daddy sound:", error);
         });
       }, 60000),
-      
+
       setTimeout(() => {
         oogabooga.play().catch((error) => {
           console.error("Error playing oogabooga sound:", error);
@@ -75,13 +75,13 @@ function App() {
           console.error("Error playing happybday sound:", error);
         });
       }, 270000),
-    ]
-  }
+    ];
+  };
 
   const clearTimeouts = () => {
     timeouts.current.forEach((timeout) => clearTimeout(timeout));
     timeouts.current = [];
-  }
+  };
 
   return (
     <>
