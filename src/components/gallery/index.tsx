@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { MemoryBubbleProps } from "./MemoryBubble";
 import MemoryBubble from "./MemoryBubble";
 
@@ -367,7 +367,31 @@ const images: MemoryBubbleProps[] = [
 const call = new Audio("/call.m4a");
 const tapdance = new Audio("/tapdance.mp3");
 
+const particlesData = [
+  { content: "❤️" },
+  { content: "🎉" },
+  { content: "🥺" },
+  { content: "💜" },
+  { content: "✨" },
+];
+
+function getRandomParticle() {
+  const p = particlesData[Math.floor(Math.random() * particlesData.length)];
+  return {
+    ...p,
+    left: Math.random() * 100,
+    delay: Math.random() * 5,
+    duration: 4 + Math.random() * 3,
+    id: Math.random().toString(36).slice(2),
+  };
+}
+
 export default function Gallery() {
+  const [particles, setParticles] = useState<
+    Array<ReturnType<typeof getRandomParticle>>
+  >([]);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
   useEffect(() => {
     setTimeout(() => {
       call.play().catch((error) => {
@@ -380,9 +404,48 @@ export default function Gallery() {
         console.error("Error playing tapdance sound:", error);
       });
     }, 40000);
+
+    intervalRef.current = setInterval(() => {
+      setParticles((prev) => [...prev, getRandomParticle()]);
+    }, 500);
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
   }, []);
+
+  // Remove particles after animation
+  useEffect(() => {
+    if (!particles.length) return;
+    const timeout = setTimeout(() => {
+      setParticles((prev) => prev.slice(1));
+    }, 4000);
+    return () => clearTimeout(timeout);
+  }, [particles]);
+
   return (
     <div className="flex flex-col items-center justify-center h-full overflow-x-auto overflow-y-hidden">
+      {/* Falling particles */}
+      <div className="pointer-events-none absolute inset-0 z-0">
+        {particles.map((p) => (
+          <span
+            key={p.id}
+            style={{
+              position: "absolute",
+              left: `${p.left}%`,
+              top: "-50px",
+              fontSize: "2rem",
+              animation: `fall ${p.duration}s linear ${p.delay}s forwards`,
+              whiteSpace: "nowrap",
+              textShadow: "0 2px 8px #0002",
+              userSelect: "none",
+            }}
+          >
+            {p.content}
+          </span>
+        ))}
+      </div>
+      {/* Gallery */}
       {images.map((image, index) => (
         <MemoryBubble
           key={index}
