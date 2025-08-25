@@ -113,7 +113,7 @@ function App() {
           Game
         </button>
       </header>
-      <div className="h-[95vh] overflow-hidden animate-light-glow">
+      <div className="h-screen overflow-hidden animate-light-glow">
         <div className="fixed inset-0 bg-[linear-gradient(319deg,#6a5acd_0%,#c54b8c_37%,#b284be_100%)] opacity-40" />
         <div className="fixed rounded-full h-96 w-96 top-[20vh] left-[20vw] bg-[rgba(106,90,205,0.1)] opacity-40 shadow-[rgba(106,90,205,0.1)] shadow-lg animate-better-pulse-1" />
         <div className="fixed rounded-full h-64 w-64 top-[40vh] left-[25vw] bg-[rgba(106,90,205,0.2)] opacity-40 shadow-[rgba(106,90,205,0.2)] shadow-lg animate-better-pulse" />
