@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { MemoryBubbleProps } from "./MemoryBubble";
 import MemoryBubble from "./MemoryBubble";
 
@@ -299,12 +299,99 @@ const images: MemoryBubbleProps[] = [
     text: "DONT TRY TO HIDE 😠 still not giving up taking stalker photos of u hehe :3 ur gonna put up with me forever MWAHAHA",
     date: "14th August 2025",
   },
+  {
+    x: 11800,
+    y: 500,
+    size: "sm",
+    imageSrc: "/public/gallery/image46.jfif",
+    text: "I hope you had a great bday party !!! I know some friends didn't turn up but I still had a great time with you :3",
+    date: "23rd August 2025",
+  },
+  {
+    x: 12000,
+    y: 150,
+    size: "lg",
+    imageSrc: "/public/gallery/image47.jfif",
+    text: "Feat. Giant Cinnamoroll !!! Now you have something to cuddle at night when I'm not around hehe :>",
+    date: "23rd August 2025",
+  },
+  {
+    x: 12500,
+    y: 400,
+    size: "md",
+    imageSrc: "/public/gallery/image48.jfif",
+    text: "Hehehe ur bday cake was really cool :0 I hope u made a wish !!!",
+    date: "23rd August 2025",
+  },
+  {
+    x: 12700,
+    y: 200,
+    size: "sm",
+    imageSrc: "/public/gallery/image49.jfif",
+    text: "Honestly you looked soooooooo ADORABLE in a skirt. Please wear skirts more 😭😭😭",
+    date: "23rd August 2025",
+  },
+  {
+    x: 12800,
+    y: 500,
+    size: "lg",
+    imageSrc: "/public/gallery/image50.jfif",
+    text: "The Conservatory !!! We ate so much I was about to explode 😩",
+    date: "23rd August 2025",
+  },
+  {
+    x: 13200,
+    y: 300,
+    size: "md",
+    imageSrc: "/public/gallery/image51.jfif",
+    text: "HAPPY 5 MONTHS ANNIV BABE !!! ILYSM ❤️❤️❤️",
+    date: "23rd August 2025",
+  },
+  {
+    x: 14000,
+    y: 150,
+    size: "xl",
+    imageSrc: "/public/gallery/image52.jfif",
+    text: "Happy 23rd Birthday Nhi !!!",
+    date: "I hope it's been as special as you are to me ❤️❤️❤️",
+  },
+  {
+    x: 15200,
+    y: 300,
+    size: "empty",
+    imageSrc: "",
+    text: "",
+  },
 ];
 
 const call = new Audio("/call.m4a");
 const tapdance = new Audio("/tapdance.mp3");
 
+const particlesData = [
+  { content: "❤️" },
+  { content: "🎉" },
+  { content: "🥺" },
+  { content: "💜" },
+  { content: "✨" },
+];
+
+function getRandomParticle() {
+  const p = particlesData[Math.floor(Math.random() * particlesData.length)];
+  return {
+    ...p,
+    left: Math.random() * 100,
+    delay: Math.random() * 5,
+    duration: 4 + Math.random() * 3,
+    id: Math.random().toString(36).slice(2),
+  };
+}
+
 export default function Gallery() {
+  const [particles, setParticles] = useState<
+    Array<ReturnType<typeof getRandomParticle>>
+  >([]);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
   useEffect(() => {
     setTimeout(() => {
       call.play().catch((error) => {
@@ -317,9 +404,48 @@ export default function Gallery() {
         console.error("Error playing tapdance sound:", error);
       });
     }, 40000);
+
+    intervalRef.current = setInterval(() => {
+      setParticles((prev) => [...prev, getRandomParticle()]);
+    }, 500);
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
   }, []);
+
+  // Remove particles after animation
+  useEffect(() => {
+    if (!particles.length) return;
+    const timeout = setTimeout(() => {
+      setParticles((prev) => prev.slice(1));
+    }, 4000);
+    return () => clearTimeout(timeout);
+  }, [particles]);
+
   return (
     <div className="flex flex-col items-center justify-center h-full overflow-x-auto overflow-y-hidden">
+      {/* Falling particles */}
+      <div className="pointer-events-none fixed inset-0 z-0">
+        {particles.map((p) => (
+          <span
+            key={p.id}
+            style={{
+              position: "absolute",
+              left: `${p.left}%`,
+              top: "-50px",
+              fontSize: "2rem",
+              animation: `fall ${p.duration}s linear ${p.delay}s forwards`,
+              whiteSpace: "nowrap",
+              textShadow: "0 2px 8px #0002",
+              userSelect: "none",
+            }}
+          >
+            {p.content}
+          </span>
+        ))}
+      </div>
+      {/* Gallery */}
       {images.map((image, index) => (
         <MemoryBubble
           key={index}

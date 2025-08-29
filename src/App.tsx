@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Game from "./components/game";
 import Gallery from "./components/gallery";
 import Intro from "./components/intro";
@@ -40,7 +40,7 @@ function App() {
           console.error("Error playing daddy sound:", error);
         });
       }, 60000),
-      
+
       setTimeout(() => {
         oogabooga.play().catch((error) => {
           console.error("Error playing oogabooga sound:", error);
@@ -76,13 +76,13 @@ function App() {
           console.error("Error playing happybday sound:", error);
         });
       }, 270000),
-    ]
-  }
+    ];
+  };
 
   const clearTimeouts = () => {
     timeouts.current.forEach((timeout) => clearTimeout(timeout));
     timeouts.current = [];
-  }
+  };
 
   return (
     <>
@@ -114,7 +114,7 @@ function App() {
           Game
         </button>
       </header>
-      <div className="h-[95vh] overflow-hidden ">
+      <div className="h-screen overflow-y-hidden">
         <div className="fixed inset-0 bg-[linear-gradient(319deg,#6a5acd_0%,#c54b8c_37%,#b284be_100%)] opacity-40" />
         <div className="fixed rounded-full h-96 w-96 top-[20vh] left-[20vw] bg-[rgba(106,90,205,0.1)] opacity-40 shadow-[rgba(106,90,205,0.1)] shadow-lg animate-better-pulse-1" />
         <div className="fixed rounded-full h-64 w-64 top-[40vh] left-[25vw] bg-[rgba(106,90,205,0.2)] opacity-40 shadow-[rgba(106,90,205,0.2)] shadow-lg animate-better-pulse" />

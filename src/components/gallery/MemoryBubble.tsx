@@ -4,7 +4,7 @@ import { useState } from "react";
 export type MemoryBubbleProps = {
   x: number;
   y: number;
-  size: "sm" | "md" | "lg";
+  size: "sm" | "md" | "lg" | "xl" | "empty";
   imageSrc: string;
   type?: number;
   text: string;
@@ -21,6 +21,23 @@ export default function MemoryBubble({
   date = "",
 }: MemoryBubbleProps) {
   const [active, setActive] = useState(false);
+  function getSeed(str: string) {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      hash = str.charCodeAt(i) + ((hash << 5) - hash);
+      hash &= hash;
+    }
+    return Math.abs(hash);
+  }
+
+  function getRandomFromString(str: string) {
+    const seed = getSeed(str);
+    // Simple pseudo-random based on seed
+    return (Math.sin(seed) + 1) / 2;
+  }
+
+  const randomNumber = Math.floor(getRandomFromString(imageSrc) * 5);
+
   return (
     <div
       onClick={() => setActive(!active)}
@@ -28,6 +45,13 @@ export default function MemoryBubble({
         "w-54 h-54": size === "sm",
         "w-72 h-72": size === "md",
         "w-96 h-96": size === "lg",
+        "w-[40rem] h-[40rem]": size === "xl",
+        invisible: size === "empty",
+        "animate-float": randomNumber % 5 === 0,
+        "animate-float-1": randomNumber % 5 === 1,
+        "animate-float-2": randomNumber % 5 === 2,
+        "animate-float-3": randomNumber % 5 === 3,
+        "animate-float-4": randomNumber % 5 === 4,
       })}
       style={{
         left: `${x}px`,
@@ -35,28 +59,44 @@ export default function MemoryBubble({
       }}
     >
       <div
-        className={clsx("absolute rounded-full", {
+        className={clsx("absolute rounded-full animate-glow", {
           "bg-[rgba(106,90,205,0.3)]": type === 0,
           "bg-[rgba(106,90,205,0.4)]": type === 1,
           "bg-[rgba(106,90,205,0.5)]": type === 2,
           "w-54 h-54": size === "sm",
           "w-72 h-72": size === "md",
           "w-96 h-96": size === "lg",
+          "w-[40rem] h-[40rem] animate-glow": size === "xl",
         })}
       />
       <div
         className={clsx(
           "absolute duration-200 flex items-center justify-center inset-0 z-50 bg-[rgba(0,0,0,0.5)] p-2 rounded-full flex-col gap-4",
           {
+            "!opacity-100 text-3xl !bg-[rgba(0,0,0,0.3)] justify-end !gap-0 animate-glow":
+              size === "xl",
             "opacity-100": active,
             "opacity-0": !active,
           }
         )}
       >
-        <p className={clsx("relative text-white text-center font-delius")}>
+        <p
+          className={clsx("relative text-white text-center font-delius", {
+            "bg-[rgba(255,255,255,0.7)] rounded-t-full p-6 !text-black font-bold animate-glow-text animate-light-pulse":
+              size === "xl",
+          })}
+        >
           {text}
         </p>
-        <p className="relative text-center text-white font-special underline">
+        <p
+          className={clsx(
+            "relative text-center text-white font-special underline",
+            {
+              "bg-[rgba(255,255,255,0.7)] rounded-full p-8 !text-black animate-glow-text animate-light-pulse":
+                size === "xl",
+            }
+          )}
+        >
           {date}
         </p>
       </div>

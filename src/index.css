@@ -8,6 +8,15 @@
   --animate-to-visible: to-visible 2s ease-in-out 0ms forwards;
   --animate-from-visible: from-visible 2s ease-in-out 0ms
 
+  --animate-float: float 3s ease-in-out 0ms infinite;
+  --animate-float-1: float 3s ease-in-out 500ms infinite;
+  --animate-float-2: float 3s ease-in-out 1000ms infinite;
+  --animate-float-3: float 3s ease-in-out 1500ms infinite;
+  --animate-float-4: float 3s ease-in-out 2000ms infinite;
+  --animate-light-pulse: light-pulse 2s ease-in-out 0ms infinite;
+  --animate-light-glow: light-glow 2s ease-in-out 0ms infinite;
+  --animate-glow: glow 2s ease-in-out 0ms infinite;
+  --animate-glow-text: glow-text 2s ease-in-out 0ms infinite;
   --animate-better-pulse: better-pulse 5s ease-in-out 0ms infinite;
   --animate-better-pulse-1: better-pulse 5s ease-in-out 250ms infinite;
   --animate-better-pulse-2: better-pulse 5s ease-in-out 2ms infinite;
@@ -45,6 +54,73 @@
   }
 }
 
+@keyframes fall {
+  0% { transform: translateY(-10px) rotate(0); opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(90vh) rotate(360deg); opacity: 0; }
+}
+
+@keyframes float {
+  0%, 
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes light-glow {
+  0%, 100% {
+    filter: brightness(100%);
+  }
+  50% {
+    filter: brightness(130%);
+  }
+}
+
+@keyframes light-pulse {
+  0% {
+    filter: drop-shadow(0 0 5px white);
+    transform: translateY(0);
+  }
+  50% {
+    filter: drop-shadow(0 0 20px white);
+    transform: translateY(-20px);
+  }
+  100% {
+    filter: drop-shadow(0 0 5px white);
+    transform: translateY(0);
+  }
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 120px rgba(174, 61, 255, 1)) drop-shadow(0 -20px 20px rgba(255, 103, 252, 0.5));
+  }
+  50% {
+    filter: drop-shadow(0 0 40px white);
+  }
+}
+
+@keyframes glow-text {
+  0% {
+    text-shadow: 0 0 1px #fff, 0 0 2px #fff, 0 0 3px #9170d8, 0 0 4px #9170d8,
+      0 0 5px #9170d8, 0 0 6px #9170d8, 0 0 7px #9170d8;
+    color: #ffffff;
+  }
+  50% {
+    text-shadow: 0 0 5px #fff, 0 0 10px #9170d8, 0 0 15px #9170d8,
+      0 0 20px #9170d8, 0 0 25px #9170d8, 0 0 30px #9170d8, 0 0 35px #9170d8;
+    color: #ff66f9;
+  }
+  100% {
+    text-shadow: 0 0 1px #fff, 0 0 2px #fff, 0 0 3px #9170d8, 0 0 4px #9170d8,
+      0 0 5px #9170d8, 0 0 6px #9170d8, 0 0 7px #9170d8;
+    color: #ffffff;
+  }
+}
 @keyframes better-pulse {
   0% {
     transform: scale(1);
