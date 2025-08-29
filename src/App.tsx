@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import Game from "./components/game";
 import Gallery from "./components/gallery";
+import Intro from "./components/intro";
 
 const perfect = new Audio("/perfect.m4a");
 const call = new Audio("/call.m4a");
@@ -16,7 +17,7 @@ const bgm = new Audio("/fallen_star.mp3");
 
 function App() {
   const timeouts = useRef<NodeJS.Timeout[]>([]);
-  const [tab, setTab] = useState<"gallery" | "game">("gallery");
+  const [tab, setTab] = useState<"intro" | "gallery" | "game">("intro");
 
   const playGalleryBgm = () => {
     perfect.currentTime = 0;
@@ -119,7 +120,8 @@ function App() {
         <div className="fixed rounded-full h-64 w-64 top-[40vh] left-[25vw] bg-[rgba(106,90,205,0.2)] opacity-40 shadow-[rgba(106,90,205,0.2)] shadow-lg animate-better-pulse" />
         <div className="fixed rounded-full h-56 w-56 top-[80vh] left-[80vw] bg-[rgba(106,90,205,0.2)] opacity-40 shadow-[rgba(106,90,205,0.2)] shadow-lg animate-better-pulse-2" />
         <div className="fixed rounded-full h-84 w-84 top-[30vh] left-[90vw] bg-[rgba(106,90,205,0.2)] opacity-40 shadow-[rgba(106,90,205,0.2)] shadow-lg animate-better-pulse-3" />
-
+        {tab !== "intro" && <div className="bg-white fixed h-screen w-screen animate-from-visible inset-0" />}
+        {tab === "intro" && <Intro onDone={() => setTab("gallery")}/>}
         {tab === "gallery" && <Gallery />}
         {tab === "game" && <Game />}
       </div>
