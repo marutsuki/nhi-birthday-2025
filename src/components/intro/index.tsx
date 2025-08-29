@@ -55,7 +55,7 @@ export default function Intro({ onDone }: { onDone: () => void }) {
             }
             {
                 state === "msg1" && (
-                    <div className="text-center">
+                    <div className="text-center animate-to-visible">
                         <h1 className="text-4xl mb-4 font-delius">She has been a precious part of my life and this website is my tribute to her.</h1>
                         <button
                             className="font-unicase px-6 py-2 bg-purple-600 text-black rounded hover:text-violet-700 duration-300 transition cursor-pointer bg-transparent text-2xl animate-pulse underline"
@@ -67,7 +67,8 @@ export default function Intro({ onDone }: { onDone: () => void }) {
             }
             {
                 state === "msg2" && (
-                    <div className="text-center">
+                    <div className="text-center animate-to-visible">
+                        <h2 className="text-9xl mb-4">🫶</h2>
                         <h1 className="text-4xl mb-4 font-delius">Let's go!</h1>
                         <button
                             className="font-unicase px-6 py-2 bg-purple-600 text-black rounded hover:text-violet-700 duration-300 transition cursor-pointer bg-transparent text-2xl animate-pulse underline"
@@ -79,8 +80,9 @@ export default function Intro({ onDone }: { onDone: () => void }) {
             }
             {
                 state === "done" && (
-                    <div className="h-full w-full bg-white animate-to-visible text-center">
+                    <div className="h-full w-full bg-white animate-to-visible flex flex-col justify-center items-center">
                         <h1 className="text-6xl mb-4 font-delius">Happy Birthday Nhi !!!</h1>
+                        <h2 className="text-2xl font-unicase">from Lucien</h2>
                     </div>
                 )
             }

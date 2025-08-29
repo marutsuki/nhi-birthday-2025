@@ -368,6 +368,7 @@ const Game: FC = () => {
 
   return (
     <div id="container" className="relative grid place-items-center h-full">
+      { state === "finished" && <div className="absolute z-[10000] font-unicase text-6xl text-white"><h1 className="text-shadow-xl drop-shadow-xl">You win !!!!</h1></div>}
       {state === "finish" && (
         <div className="absolute flex flex-col items-center z-[1000]">
           <h1 className="text-4xl mb-4">Finish Him !!!</h1>

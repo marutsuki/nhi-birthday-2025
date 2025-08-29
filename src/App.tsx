@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Game from "./components/game";
 import Gallery from "./components/gallery";
 import Intro from "./components/intro";
@@ -21,7 +21,9 @@ function App() {
 
   const playGalleryBgm = () => {
     perfect.currentTime = 0;
+    perfect.volume = 0.5;
     perfect.play();
+
     timeouts.current = [
       setTimeout(() => {
         call.play().catch((error) => {
@@ -84,6 +86,27 @@ function App() {
     timeouts.current = [];
   };
 
+  useEffect(() => {
+    if (tab !== "gallery") {
+      return;
+    }
+    playGalleryBgm();
+    clearTimeouts();
+    bgm.pause();
+  }, [tab]);
+
+  useEffect(() => {
+    if (tab !== "game") {
+      return;
+    }
+    perfect.pause();
+    clearTimeouts();
+    bgm.loop = true;
+    bgm.currentTime = 0;
+    bgm.volume = 0.2;
+    bgm.play();
+  }, [tab]);
+
   return (
     <>
       <header className="fixed top-0 right-0 px-16 py-4 flex gap-2 font-unicase z-[1000]">
@@ -91,9 +114,6 @@ function App() {
           className="cursor-pointer hover:text-white"
           onClick={() => {
             setTab("gallery");
-            playGalleryBgm();
-            clearTimeouts();
-            bgm.pause();
           }}
         >
           Gallery
@@ -102,13 +122,6 @@ function App() {
           className="cursor-pointer hover:text-white"
           onClick={() => {
             setTab("game");
-            perfect.pause();
-            clearTimeouts();
-
-            bgm.loop = true;
-            bgm.currentTime = 0;
-            bgm.volume = 0.3;
-            bgm.play();
           }}
         >
           Game
@@ -120,7 +133,10 @@ function App() {
         <div className="fixed rounded-full h-64 w-64 top-[40vh] left-[25vw] bg-[rgba(106,90,205,0.2)] opacity-40 shadow-[rgba(106,90,205,0.2)] shadow-lg animate-better-pulse" />
         <div className="fixed rounded-full h-56 w-56 top-[80vh] left-[80vw] bg-[rgba(106,90,205,0.2)] opacity-40 shadow-[rgba(106,90,205,0.2)] shadow-lg animate-better-pulse-2" />
         <div className="fixed rounded-full h-84 w-84 top-[30vh] left-[90vw] bg-[rgba(106,90,205,0.2)] opacity-40 shadow-[rgba(106,90,205,0.2)] shadow-lg animate-better-pulse-3" />
-        {tab !== "intro" && <div className="bg-white fixed h-screen w-screen animate-from-visible inset-0" />}
+        {tab !== "intro" && <div className="bg-white fixed h-screen w-screen animate-from-visible inset-0 z-[10000] flex flex-col justify-center items-center">
+          <h1 className="text-6xl mb-4 font-delius">Happy Birthday Nhi !!!</h1>
+          <h2 className="text-2xl font-unicase">from Lucien</h2>
+        </div>}
         {tab === "intro" && <Intro onDone={() => setTab("gallery")}/>}
         {tab === "gallery" && <Gallery />}
         {tab === "game" && <Game />}

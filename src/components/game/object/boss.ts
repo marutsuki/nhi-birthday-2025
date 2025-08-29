@@ -43,7 +43,7 @@ export class LucienBossEnemy extends Enemy {
     const image = new Image();
     image.src = "/enemies/boss/lucien.png";
 
-    super(x, y, 200, 200, image, 1);
+    super(x, y, 200, 200, image, 5000);
 
     this.open = new Image();
     this.open.src = "/enemies/boss/lucien1.png";

@@ -6,7 +6,7 @@
   --font-special: "Edu NSW ACT Cursive", cursive;
 
   --animate-to-visible: to-visible 2s ease-in-out 0ms forwards;
-  --animate-from-visible: from-visible 2s ease-in-out 0ms
+  --animate-from-visible: from-visible 2s ease-in-out 0ms forwards;
 
   --animate-float: float 3s ease-in-out 0ms infinite;
   --animate-float-1: float 3s ease-in-out 500ms infinite;
@@ -48,9 +48,11 @@
 @keyframes from-visible {
   0% {
     opacity: 100%;
+    z-index: 10000;
   }
   100% {
     opacity: 0%;
+    z-index: -1;
   }
 }
 
