@@ -36,6 +36,7 @@ export class Hero extends GameObject {
   private velocity: number = 5;
   private keysPressed: Set<string> = new Set();
   private direction: { x: number; y: number } = { x: 0, y: 0 };
+  private hit = false;
 
   constructor(
     x: number,
@@ -123,6 +124,7 @@ export class Hero extends GameObject {
 
   onHit(dmg: number): void {
     this.hp -= dmg;
+    this.hit = true;
     new Audio("/sounds/hit.wav").play();
     if (this.hp <= 0) {
       console.log("Hero is dead!");
@@ -136,5 +138,15 @@ export class Hero extends GameObject {
       this.y < other.y + other.height &&
       this.y + this.height > other.y
     );
+  }
+
+  override draw(ctx: CanvasRenderingContext2D) {
+    if (this.hit) {
+      ctx.fillStyle = "red"; // Change color to indicate hit
+      ctx.fillRect(this.x, this.y, this.width, this.height);
+      this.hit = false;
+    } else {
+      ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+    }
   }
 }

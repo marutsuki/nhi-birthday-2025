@@ -67,6 +67,7 @@ const Game: FC = () => {
         }
 
         const b = spamButton.current;
+        new Audio("/sounds/slap1.wav").play();
         if (b) {
           b.style.background = "red";
         }
